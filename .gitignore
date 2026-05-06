@@ -12,6 +12,7 @@ build/
 __MACOSX/
 .coverage
 htmlcov/
+.mildoc/
 *.sarif
 !examples/*.sarif
 !docs/**/*.sarif

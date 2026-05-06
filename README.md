@@ -84,6 +84,19 @@ DoD CUI marking guidance requires `CUI` markings and a designation indicator blo
 
 See [`docs/CUI-Compliance-Guide.md`](docs/CUI-Compliance-Guide.md), [`docs/OSMEAC-Compliance-Guide.md`](docs/OSMEAC-Compliance-Guide.md), [`docs/NAMP-CSEC-Notes.md`](docs/NAMP-CSEC-Notes.md), and [`docs/SOURCES.md`](docs/SOURCES.md) for per-rule explanations and references.
 
+## Archivist receipts
+
+`mildoc-lint` v0.2 ships with an optional local **Archivist** ledger that produces a deterministic, content-addressed receipt for every lint run. Each receipt records what was checked, against what rule pack, by what tool version, and what the decision was. Receipts are SQLite-persisted and append-only on disk.
+
+```bash
+mildoc-lint archivist init
+mildoc-lint archivist lint docs/order.md --profile osmeac --write-receipt
+mildoc-lint archivist status docs/order.md
+mildoc-lint archivist gate docs/order.md --require-pass --require-sources --require-no-pii
+```
+
+The ledger is local-only. `.mildoc/` is gitignored. The Archivist does not certify compliance, determine classification, or replace official review — see [`docs/Archivist-Receipts.md`](docs/Archivist-Receipts.md) for the full receipt schema, fail-closed conditions, and workflow.
+
 ## Open-core boundary
 
 See [`docs/OPEN_CORE.md`](docs/OPEN_CORE.md) for the full split.
