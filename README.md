@@ -6,11 +6,18 @@
 
 ## What it is not
 
-- It does **not** generate tactical plans.
-- It does **not** certify CMMC, RMF, or NIST compliance.
-- It does **not** replace OOMA, NALCOMIS, DECKPLATE, CSEC, official QA, classification review, legal review, or command approval.
-- It does **not** determine whether information is actually CUI. That is a designating-authority decision.
-- It does **not** call the network, a model, or any cloud service.
+In short: `mildoc-lint` does not generate tactical plans, does not certify compliance, does not determine classification, and does not call the network.
+
+`mildoc-lint` does not:
+
+- generate tactical plans
+- determine classification
+- determine whether information is actually CUI (that is a designating-authority decision)
+- certify CMMC, RMF, NIST, or DoD compliance
+- replace official review, QA, CSEC, command approval, or systems of record (OOMA, NALCOMIS, DECKPLATE)
+- use network calls, telemetry, cloud APIs, or model calls
+
+It is not affiliated with the U.S. Department of Defense, the U.S. Navy, the U.S. Marine Corps, NAVAIR, or any U.S. Government program office. See [`INTENT.md`](INTENT.md), [`docs/PUBLIC_BOUNDARY.md`](docs/PUBLIC_BOUNDARY.md), and [`docs/CLAIMS_MAP.md`](docs/CLAIMS_MAP.md).
 
 ## Install
 

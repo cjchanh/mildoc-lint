@@ -31,9 +31,13 @@ CASE_INSENSITIVE_BANNED_BARE = [
 ]
 
 
-# RELEASE_CHECKLIST.md documents what is banned, so it intentionally contains
-# the banned phrases as items in a checklist. Exclude it from the static check.
-EXCLUDE = {"docs/RELEASE_CHECKLIST.md"}
+# RELEASE_CHECKLIST.md, CONTRIBUTING.md, and CLAIMS_MAP.md document what is
+# banned, so they intentionally enumerate banned phrases. Exclude them.
+EXCLUDE = {
+    "docs/RELEASE_CHECKLIST.md",
+    "CONTRIBUTING.md",
+    "docs/CLAIMS_MAP.md",
+}
 
 
 def _markdown_files() -> list[Path]:
