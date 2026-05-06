@@ -52,11 +52,11 @@ mildoc-lint --version
 
 ## 3. Run Standalone Binary
 
-Download the `build-artifacts` workflow artifact ZIP from GitHub Actions,
-extract it, then unpack the enclosed platform archive:
+Download the `release-mildoc-lint-<platform>-<arch>` workflow artifact ZIP from
+GitHub Actions, extract it, then unpack the enclosed platform archive:
 
 ```bash
-unzip mildoc-lint-linux-x64.zip
+unzip release-mildoc-lint-linux-x64.zip
 tar -xzf mildoc-lint-linux-x64.tar.gz
 cd mildoc-lint-linux-x64
 ./mildoc-lint --version
@@ -69,6 +69,7 @@ On Windows, unzip the outer GitHub Actions artifact, then unpack the enclosed
 platform archive and run:
 
 ```powershell
+Expand-Archive .\release-mildoc-lint-windows-x64.zip -DestinationPath .
 Expand-Archive .\mildoc-lint-windows-x64.zip -DestinationPath .
 cd .\mildoc-lint-windows-x64
 .\mildoc-lint.exe --version
