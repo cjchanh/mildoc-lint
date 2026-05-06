@@ -161,12 +161,11 @@ jobs:
               base_dir=folders[0].name,
           )
           print(archive)
+          for package in [*dist.glob("*.whl"), *dist.glob("*.tar.gz")]:
+              shutil.copy2(package, release / package.name)
           PY
           python scripts/checksum_artifacts.py release
       - uses: actions/upload-artifact@v7
         with:
           name: release-${{ env.ARTIFACT_NAME }}
-          path: |
-            dist/*.whl
-            dist/*.tar.gz
-            release/*
+          path: release/*
