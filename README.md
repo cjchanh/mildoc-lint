@@ -2,7 +2,7 @@
 
 **Local-first document assurance for defense-adjacent administrative, CUI, O-SMEAC, naval correspondence, and NAMP/CSEC readiness records.**
 
-`mildoc-lint` is a deterministic linter that catches structural failures in military-style documents *before* they leave the local machine. It is the open-core wedge: rules engine first, model-assisted drafting later.
+`mildoc-lint` is a deterministic linter that catches structural failures in military-style documents *before* they leave the local machine.
 
 ## What it is not
 
@@ -81,7 +81,7 @@ mildoc-lint: scanned 1 document(s), findings=6 blocker=0 error=4 warn=1 info=1
   fix: Use standalone "CUI" for the banner/footer. Put categories and dissemination controls in the designation indicator block.
 ```
 
-A pre-generated SARIF example lives at [`examples/cds-mildoc-example.sarif`](examples/cds-mildoc-example.sarif).
+A pre-generated SARIF example lives at [`examples/mildoc-example.sarif`](examples/mildoc-example.sarif).
 
 ## Why this shape
 
@@ -118,7 +118,6 @@ See [`docs/OPEN_CORE.md`](docs/OPEN_CORE.md) for the full split.
 
 **Closed / future enterprise:**
 - unit-specific rule packs
-- local LLM drafting adapter
 - NAMP/CSEC importers
 - OOMA / NALCOMIS / DECKPLATE adapters
 - SharePoint / NMCI packaging
@@ -143,7 +142,7 @@ Release-readiness checklist: [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIS
 
 ## Roadmap
 
-See [`ROADMAP.md`](ROADMAP.md). Rust core and WASM browser surface are roadmap items, not v0.1 implementation.
+See [`ROADMAP.md`](ROADMAP.md).
 
 ## License
 

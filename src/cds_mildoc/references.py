@@ -52,7 +52,7 @@ AUTHORITIES: dict[str, dict[str, str]] = {
     },
     "SECNAV_5216_5": {
         "title": "SECNAV M-5216.5 Department of the Navy Correspondence Manual",
-        "url": "https://www.secnav.navy.mil/doni/manuals-secnav.aspx",
+        "url": "https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf",
         "summary": "Department of the Navy correspondence manual; built-in checks are intentionally limited to common line-label and subject-format issues.",
     },
 }

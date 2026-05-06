@@ -176,7 +176,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_from"
         },
@@ -201,7 +201,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_subj"
         },
@@ -226,7 +226,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_to"
         },
@@ -454,7 +454,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_from"
         },
@@ -479,7 +479,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_subj"
         },
@@ -504,7 +504,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_to"
         },
@@ -529,7 +529,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_from"
         },
@@ -554,7 +554,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_subj"
         },
@@ -579,7 +579,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_to"
         },
@@ -854,7 +854,7 @@
             "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
             "severity": "error",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.missing_subj"
         },
@@ -1279,7 +1279,7 @@
             "recommendation": "Order common labels as From, To, Via, Subj, Ref, Encl.",
             "severity": "warn",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.label_order"
         },
@@ -1304,7 +1304,7 @@
             "recommendation": "Rename the label to \"Subj:\".",
             "severity": "warn",
             "snippet": null,
-            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
           },
           "ruleId": "naval.subject_label_not_subj"
         },
@@ -1436,8 +1436,7 @@
       ],
       "tool": {
         "driver": {
-          "informationUri": "https://github.com/cds/cds-mildoc-linter",
-          "name": "cds-mildoc-linter",
+          "name": "mildoc-lint",
           "rules": [
             {
               "help": {

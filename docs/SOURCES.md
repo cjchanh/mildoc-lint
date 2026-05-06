@@ -43,7 +43,7 @@ mildoc-lint rules --format json
 ## Naval correspondence
 
 - **SECNAV M-5216.5 Department of the Navy Correspondence Manual** — Department of the Navy correspondence manual. `mildoc-lint`'s naval profile implements minimal surface checks (label order, subject-line shape) only.
-  https://www.secnav.navy.mil/doni/manuals-secnav.aspx
+  https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf
 
 ## NAVAIR / NAMP / CSEC
 
@@ -58,6 +58,7 @@ mildoc-lint rules --format json
 ## Repository / process context
 
 - **Code.mil open-source guidance** — referenced as repo/process context for CDS open-source releases. Not a rule authority.
+  https://code.mil/how-to-open-source.html
 
 ---
 

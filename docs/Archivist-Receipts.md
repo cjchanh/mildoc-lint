@@ -25,7 +25,7 @@ A receipt is a JSON manifest with the schema `mildoc.receipt.v1`:
 }
 ```
 
-The `receipt_sha256` is computed over a canonical JSON serialization (sorted keys, no whitespace) of every field above. Identical inputs always produce identical receipts.
+The `receipt_sha256` is computed over a canonical JSON serialization (sorted keys, no whitespace) of the deterministic decision fields. Runtime metadata such as `created_at_utc` is stored in the manifest but excluded from the receipt hash, so identical lint inputs produce the same `receipt_sha256`.
 
 ## What gets hashed
 
@@ -36,7 +36,7 @@ The `receipt_sha256` is computed over a canonical JSON serialization (sorted key
 | Claim | `claim_hash(text, location)` |
 | Finding | `finding_hash(rule_id, message, evidence)` |
 | Rule pack | `rule_pack_hash(rules, sources)` — joint hash of rule definitions and source authorities |
-| Receipt | `receipt_hash(manifest)` — canonical JSON over every other field |
+| Receipt | `receipt_hash(manifest)` — canonical JSON over deterministic decision fields, excluding `created_at_utc` and `receipt_sha256` |
 
 All hashing uses SHA-256, hex-encoded.
 

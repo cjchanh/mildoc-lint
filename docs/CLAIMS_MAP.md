@@ -5,7 +5,7 @@ Every public claim in `mildoc-lint`'s README and docs maps to a verifiable artif
 | Claim | Evidence |
 |---|---|
 | Local-first; no network calls | No `requests` / `httpx` / `urllib` import in any module under `src/cds_mildoc/`. Verify: `grep -RnE "^(from\|import) (requests\|httpx\|urllib\|aiohttp)" src/` returns nothing. Design note: [`THREAT_MODEL.md`](../THREAT_MODEL.md). |
-| Synthetic examples only | [`examples/`](../examples/) contains only `bad_cui_order.md`, `good_training_opord.md`, `namp_discrepancy.md`, `naval_letter_bad.md`, plus generated SARIF. All fixtures use synthetic placeholders (`Synthetic Work Center`, `synthetic@example.mil`, `SYN-001`). [`CONTRIBUTING.md`](../CONTRIBUTING.md) bans real data. |
+| Synthetic examples only | [`examples/`](../examples/) contains only `bad_cui_order.md`, `good_training_opord.md`, `namp_discrepancy.md`, `naval_letter_bad.md`, plus generated SARIF. All fixtures use synthetic placeholders (`Synthetic Work Center`, `synthetic@example.invalid`, `SYN-001`). [`CONTRIBUTING.md`](../CONTRIBUTING.md) bans real data. |
 | CLI entrypoint `mildoc-lint` | [`pyproject.toml`](../pyproject.toml) `[project.scripts]` declares `mildoc-lint = "cds_mildoc.cli:main"`. Smoke test: `tests/test_cli_entrypoints.py::test_parser_prog_name_is_mildoc_lint`. |
 | `--version` reports `mildoc-lint 0.2.0` | [`src/cds_mildoc/cli.py`](../src/cds_mildoc/cli.py) `--version` action. Test: `tests/test_cli_entrypoints.py::test_version_string_reports_mildoc_lint`. |
 | CUI checks | [`src/cds_mildoc/rules/cui.py`](../src/cds_mildoc/rules/cui.py) (~240 LOC). Doc: [`docs/CUI-Compliance-Guide.md`](CUI-Compliance-Guide.md). Test: `tests/test_linter.py::test_cui_invalid_banner_and_missing_di_line`. |

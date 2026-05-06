@@ -43,40 +43,9 @@ Add a local SQLite-backed receipt and provenance ledger. Every lint run produces
 - report bundle export
 - offline reference viewer for public docs
 
-## Phase 3: Enterprise closed layer
+## Deferred/private layers
 
-- unit-specific rules
-- NAMP/CSEC import/export adapters
-- SharePoint packaging
-- CMMC/RMF artifacts
-- signed installer
-- content-hash audit trail
-
-## Phase 4: Model-assisted drafting
-
-Only after deterministic rules are stable:
-
-- local 7B/14B adapter for suggestions
-- tool-calling locked behind schemas
-- no direct submission authority
-- human approval gate
-- eval suite for hallucination, refusal, and tool misuse
-
-## Future: cds-maintainer (separate product, deferred)
-
-A field-grade, source-locked troubleshooting assistant for junior maintainers
-working on technical equipment in austere conditions. The user story:
-a Lance Corporal at 0200 with a non-starting generator should not have to
-fight Ctrl+F across a 600-page PDF.
-
-Scope sketch:
-- ingestion of public/Distribution-Statement-A technical manuals
-- procedure graph (symptom → equipment model → safety state → fault tree → next check → result → escalation)
-- every step linked to a manual section and an Archivist receipt
-- fail-closed: no source = no answer, escalate to supervisor
-- enterprise: customer-authorized manual corpus, NAMP/CSEC integration, signed builds
-
-This is **not** a `mildoc-lint` subcommand. It is a separate product
-that will share the Archivist receipt model. It is not on the
-`mildoc-lint` development critical path. Captured here so the architecture
-stays consistent when the time comes.
+Private enterprise, model-assisted, customer-ingestion, and maintenance-assistant
+work is intentionally outside the public `mildoc-lint` roadmap. This repository
+stays focused on deterministic local linting, public-source rule metadata, stable
+JSON/SARIF output, and Archivist receipts over synthetic examples.

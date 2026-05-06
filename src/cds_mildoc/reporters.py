@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 from collections import Counter
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -36,8 +35,7 @@ def render_text(result: LintResult) -> str:
 
 def render_json(result: LintResult) -> str:
     payload = {
-        "tool": "cds-mildoc-linter",
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "tool": "mildoc-lint",
         "path": result.path,
         "documents_scanned": result.documents_scanned,
         "findings": [f.to_dict() for f in result.findings],
@@ -95,8 +93,7 @@ def render_sarif(result: LintResult) -> str:
             {
                 "tool": {
                     "driver": {
-                        "name": "cds-mildoc-linter",
-                        "informationUri": "https://github.com/cds/cds-mildoc-linter",
+                        "name": "mildoc-lint",
                         "rules": list(rules.values()),
                     }
                 },

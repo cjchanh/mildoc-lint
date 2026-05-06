@@ -64,6 +64,22 @@ def test_receipt_hash_is_deterministic() -> None:
     assert r1 == r2
 
 
+def test_receipt_hash_excludes_runtime_timestamp() -> None:
+    base = dict(
+        document_sha256="d" * 64,
+        rule_pack_sha256="r" * 64,
+        source_set_sha256="s" * 64,
+        findings_sha256="f" * 64,
+        decision="PASS",
+        profile="all",
+        tool_version="0.2.0",
+    )
+    r1 = generate_receipt(**base, created_at_utc="2026-05-06T00:00:00Z")
+    r2 = generate_receipt(**base, created_at_utc="2026-05-06T00:00:01Z")
+    assert r1["created_at_utc"] != r2["created_at_utc"]
+    assert r1["receipt_sha256"] == r2["receipt_sha256"]
+
+
 def test_document_hash_changes_with_content(tmp_path: Path) -> None:
     h1 = document_hash("alpha", path="x.md")
     h2 = document_hash("bravo", path="x.md")

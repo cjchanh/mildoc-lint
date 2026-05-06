@@ -42,5 +42,13 @@ def rule_pack_hash(rules: dict[str, Any], sources: dict[str, Any]) -> str:
 
 
 def receipt_hash(manifest: dict[str, Any]) -> str:
-    payload = {k: v for k, v in manifest.items() if k != "receipt_sha256"}
+    payload = {
+        k: v
+        for k, v in manifest.items()
+        if k
+        not in {
+            "created_at_utc",
+            "receipt_sha256",
+        }
+    }
     return content_hash(_canonical(payload))

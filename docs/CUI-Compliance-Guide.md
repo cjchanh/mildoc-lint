@@ -89,7 +89,7 @@ CUI
 Controlled by: U.S. Marine Corps / Training Command
 CUI Category: SP-PRCMT
 LDC: FED ONLY
-POC: trainingcmd-poc@example.mil
+POC: trainingcmd-poc@example.invalid
 ```
 
 **Source:** DoD CUI Designation Indicator Block marking tip.

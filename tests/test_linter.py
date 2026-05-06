@@ -14,7 +14,7 @@ def test_cui_invalid_banner_and_missing_di_line():
 Synthetic content.
 Controlled by: CDS/SYNTHETIC
 CUI Category: CTI
-POC: synthetic@example.mil
+POC: synthetic@example.invalid
 """,
         path="synthetic.md",
     )

@@ -17,7 +17,7 @@ The line between what is in this repo and what is not.
 - Local Archivist receipt ledger (SQLite, deterministic content-addressed receipts)
 - Release checklist
 - Threat model
-- CI workflow with SARIF GitHub Code Scanning integration
+- CI workflow that runs tests and uploads a SARIF artifact
 
 ## NOT in this repo (private, CDS enterprise / future)
 

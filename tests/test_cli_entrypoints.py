@@ -33,3 +33,12 @@ def test_lint_examples_runs_without_crash(tmp_path) -> None:
     rc = main(["lint", "examples", "--profile", "all", "--format", "json", "--out", str(out)])
     assert rc in (0, 1), f"unexpected exit code {rc}"
     assert out.exists() and out.stat().st_size > 0
+
+
+def test_json_report_is_stable_without_runtime_timestamp(tmp_path) -> None:
+    out1 = tmp_path / "out1.json"
+    out2 = tmp_path / "out2.json"
+    args = ["lint", "examples/good_training_opord.md", "--profile", "all", "--format", "json"]
+    assert main([*args, "--out", str(out1)]) in (0, 1)
+    assert main([*args, "--out", str(out2)]) in (0, 1)
+    assert out1.read_text(encoding="utf-8") == out2.read_text(encoding="utf-8")

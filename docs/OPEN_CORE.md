@@ -13,7 +13,7 @@
 - JSON, text, and SARIF 2.1.0 output
 - Synthetic example fixtures
 - Public-source authority references
-- CI workflow and SARIF GitHub Code Scanning integration
+- CI workflow that runs tests and uploads a SARIF artifact
 
 The open-core surface stays useful without any model, network call, or proprietary import.
 
@@ -22,7 +22,6 @@ The open-core surface stays useful without any model, network call, or proprieta
 These are kept out of the open-core repo deliberately. They are the layer that produces revenue and the layer that touches non-public material.
 
 - **Unit-specific rule packs** — wing/squadron/component-level rule packs that encode local conventions.
-- **Local LLM drafting adapter** — a deterministic, offline drafting layer over local models (MoLA, MLX, Ollama) that helps populate skeletons without network calls. Behind a human approval gate.
 - **NAMP/CSEC importers** — ingestion adapters for actual checklist data. Will only be authored if/when a real public-source checklist is available; until then no checklist content appears anywhere.
 - **OOMA / NALCOMIS / DECKPLATE adapters** — read-only export bridges for records originating in official maintenance systems.
 - **SharePoint / NMCI packaging** — installer/distribution for restricted networks.

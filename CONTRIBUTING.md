@@ -54,7 +54,7 @@ If your contribution requires any of those framings, it does not belong in the o
 All committed examples must be obviously synthetic. Use placeholders like:
 
 - `Synthetic Work Center`
-- `synthetic@example.mil`
+- `synthetic@example.invalid`
 - `2026-05-15`
 - `SYN-001`
 - generic operational verbs and structures
