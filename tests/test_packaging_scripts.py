@@ -106,6 +106,28 @@ def test_build_binary_replaces_artifact_without_leaving_backup(
     assert not (tmp_path / "dist" / ".mildoc-lint-linux-x64.bak").exists()
 
 
+def test_stage_artifact_recovers_from_stale_backup_file(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    raw_output = tmp_path / "raw" / "mildoc-lint"
+    artifact_dir = tmp_path / "dist" / "mildoc-lint-linux-x64"
+    backup_path = tmp_path / "dist" / ".mildoc-lint-linux-x64.bak"
+    raw_output.mkdir(parents=True)
+    artifact_dir.mkdir(parents=True)
+    (tmp_path / "LICENSE").write_text("license\n", encoding="utf-8")
+    (raw_output / "mildoc-lint").write_text("new\n", encoding="utf-8")
+    (artifact_dir / "mildoc-lint").write_text("old\n", encoding="utf-8")
+    backup_path.write_text("stale\n", encoding="utf-8")
+    monkeypatch.setattr(build_binary, "REPO_ROOT", tmp_path)
+
+    out = build_binary._stage_artifact(tmp_path / "dist", raw_output, "linux", "x64")
+
+    assert out == artifact_dir
+    assert (artifact_dir / "mildoc-lint").read_text(encoding="utf-8") == "new\n"
+    assert not backup_path.exists()
+
+
 def test_build_binary_requires_pdf_build_dependency(monkeypatch: pytest.MonkeyPatch) -> None:
     def fake_module_is_missing(module: str) -> bool:
         return module == "pypdf"

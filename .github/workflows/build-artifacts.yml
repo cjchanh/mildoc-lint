@@ -10,6 +10,71 @@ permissions:
   contents: read
 
 jobs:
+  package:
+    name: package wheel+sdist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m build
+      - name: Install built wheel
+        shell: bash
+        run: |
+          python - <<'PY'
+          import platform
+          import subprocess
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          wheels = sorted(Path("dist").glob("*.whl"))
+          if len(wheels) != 1:
+              raise SystemExit(f"expected one wheel, found {wheels}")
+
+          smoke_root = Path(tempfile.mkdtemp(prefix="mildoc-wheel-smoke-"))
+          venv_dir = smoke_root / "venv"
+          subprocess.run([sys.executable, "-m", "venv", str(venv_dir)], check=True)
+
+          windows = platform.system() == "Windows"
+          bin_dir = venv_dir / ("Scripts" if windows else "bin")
+          python = bin_dir / ("python.exe" if windows else "python")
+          suffix = ".exe" if windows else ""
+          mildoc_lint = bin_dir / f"mildoc-lint{suffix}"
+          cds_mildoc = bin_dir / f"cds-mildoc{suffix}"
+
+          subprocess.run([str(python), "-m", "pip", "install", str(wheels[0])], check=True)
+          subprocess.run([str(mildoc_lint), "--version"], check=True, cwd=smoke_root)
+          subprocess.run([str(cds_mildoc), "--version"], check=True, cwd=smoke_root)
+          subprocess.run([str(python), "-I", "-m", "cds_mildoc", "--version"], check=True, cwd=smoke_root)
+          PY
+      - run: python -m pytest -q
+      - run: ruff check .
+      - name: Validate tag matches package version
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          expected=$(python - <<'PY'
+          from cds_mildoc._version import __version__
+
+          print(f"v{__version__}")
+          PY
+          )
+          if [ "$GITHUB_REF_NAME" != "$expected" ]; then
+            echo "expected tag $expected but got $GITHUB_REF_NAME"
+            exit 1
+          fi
+      - run: python scripts/checksum_artifacts.py dist
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-python-packages
+          path: |
+            dist/*.whl
+            dist/*.tar.gz
+            dist/SHA256SUMS
+
   build:
     name: build ${{ matrix.label }}
     runs-on: ${{ matrix.os }}
@@ -44,37 +109,6 @@ jobs:
         run: |
           python scripts/build_binary.py --validate-native-tags --platform-tag "${{ matrix.platform }}" --arch-tag "${{ matrix.arch }}"
       - run: python -m pip install -e ".[dev]"
-      - run: python -m build
-      - name: Install built wheel
-        shell: bash
-        run: |
-          python - <<'PY'
-          import platform
-          import subprocess
-          import sys
-          import tempfile
-          from pathlib import Path
-
-          wheels = sorted(Path("dist").glob("*.whl"))
-          if len(wheels) != 1:
-              raise SystemExit(f"expected one wheel, found {wheels}")
-
-          smoke_root = Path(tempfile.mkdtemp(prefix="mildoc-wheel-smoke-"))
-          venv_dir = smoke_root / "venv"
-          subprocess.run([sys.executable, "-m", "venv", str(venv_dir)], check=True)
-
-          windows = platform.system() == "Windows"
-          bin_dir = venv_dir / ("Scripts" if windows else "bin")
-          python = bin_dir / ("python.exe" if windows else "python")
-          suffix = ".exe" if windows else ""
-          mildoc_lint = bin_dir / f"mildoc-lint{suffix}"
-          cds_mildoc = bin_dir / f"cds-mildoc{suffix}"
-
-          subprocess.run([str(python), "-m", "pip", "install", str(wheels[0])], check=True)
-          subprocess.run([str(mildoc_lint), "--version"], check=True, cwd=smoke_root)
-          subprocess.run([str(cds_mildoc), "--version"], check=True, cwd=smoke_root)
-          subprocess.run([str(python), "-I", "-m", "cds_mildoc", "--version"], check=True, cwd=smoke_root)
-          PY
       - run: python -m pytest -q
       - run: ruff check .
       - name: Validate tag matches package version
@@ -150,8 +184,6 @@ jobs:
               base_dir=folders[0].name,
           )
           print(archive)
-          for package in [*dist.glob("*.whl"), *dist.glob("*.tar.gz")]:
-              shutil.copy2(package, release / package.name)
           PY
           python scripts/checksum_artifacts.py release
       - uses: actions/upload-artifact@v7

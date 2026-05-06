@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import sys
 import zipfile
 from pathlib import Path
 from xml.etree import ElementTree as ET
@@ -49,6 +50,11 @@ def _read_pdf(path: Path) -> str:
     try:
         from pypdf import PdfReader  # type: ignore
     except ImportError as exc:  # pragma: no cover - optional dependency branch
+        if getattr(sys, "frozen", False):
+            raise ParserError(
+                "Bundled PDF support is missing from this standalone artifact; "
+                "rebuild or re-download the release archive."
+            ) from exc
         raise ParserError(
             'PDF parsing requires optional dependency: use `pipx inject mildoc-lint pypdf`, '
             'reinstall with `pipx install "mildoc-lint[pdf]"`, use `pip install "mildoc-lint[pdf]"`, '

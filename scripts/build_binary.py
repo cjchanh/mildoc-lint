@@ -50,11 +50,15 @@ def _readme_text(platform_tag: str, arch_tag: str) -> str:
     )
 
 
+def _remove_path(path: Path) -> None:
+    if path.is_dir() and not path.is_symlink():
+        shutil.rmtree(path)
+    elif path.exists() or path.is_symlink():
+        path.unlink()
+
+
 def _copy_pyinstaller_output(source: Path, destination: Path) -> None:
-    if destination.is_dir():
-        shutil.rmtree(destination)
-    elif destination.exists():
-        destination.unlink()
+    _remove_path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
 
     if source.is_dir():
@@ -146,7 +150,7 @@ def _stage_artifact(
         encoding="utf-8",
     )
     if backup_dir.exists():
-        shutil.rmtree(backup_dir)
+        _remove_path(backup_dir)
     if artifact_dir.exists():
         artifact_dir.replace(backup_dir)
     try:
@@ -156,7 +160,7 @@ def _stage_artifact(
             backup_dir.replace(artifact_dir)
         raise
     if backup_dir.exists():
-        shutil.rmtree(backup_dir)
+        _remove_path(backup_dir)
     return artifact_dir
 
 
