@@ -7,6 +7,7 @@ __pycache__/
 venv/
 dist/
 build/
+release/
 *.egg-info/
 .DS_Store
 __MACOSX/

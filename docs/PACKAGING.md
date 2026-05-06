@@ -41,7 +41,8 @@ dist/
 
 On Windows, the executable is `mildoc-lint.exe`.
 
-Generate checksums for packaged release bundles with:
+After the archive-packaging step has created `release/`, generate checksums for
+those bundles with:
 
 ```bash
 python scripts/checksum_artifacts.py release

@@ -66,14 +66,17 @@ def _copy_pyinstaller_output(source: Path, destination: Path) -> None:
     raise FileNotFoundError(f"PyInstaller output not found: {source}")
 
 
-def build(dist_dir: Path, platform_tag: str, arch_tag: str) -> Path:
+def _require_pyinstaller():
     try:
         import PyInstaller.__main__ as pyinstaller
     except ModuleNotFoundError as exc:
         raise SystemExit(
             "PyInstaller is not installed. Run: python -m pip install -e '.[build]'"
         ) from exc
+    return pyinstaller
 
+
+def _prepare_build_root() -> Path:
     if not SPEC_PATH.exists():
         raise FileNotFoundError(f"missing PyInstaller spec: {SPEC_PATH}")
 
@@ -84,7 +87,11 @@ def build(dist_dir: Path, platform_tag: str, arch_tag: str) -> Path:
         shutil.rmtree(build_root)
     raw_dist.mkdir(parents=True, exist_ok=True)
     work_path.mkdir(parents=True, exist_ok=True)
+    return raw_dist
 
+
+def _run_pyinstaller(pyinstaller, raw_dist: Path) -> None:
+    work_path = raw_dist.parent / "work"
     pyinstaller.run(
         [
             "--clean",
@@ -97,11 +104,18 @@ def build(dist_dir: Path, platform_tag: str, arch_tag: str) -> Path:
         ]
     )
 
+
+def _stage_artifact(
+    dist_dir: Path,
+    pyinstaller_output: Path,
+    platform_tag: str,
+    arch_tag: str,
+) -> Path:
     artifact_name = f"mildoc-lint-{platform_tag}-{arch_tag}"
     artifact_dir = dist_dir / artifact_name
     staging_dir = dist_dir / f".{artifact_name}.tmp"
     backup_dir = dist_dir / f".{artifact_name}.bak"
-    _copy_pyinstaller_output(raw_dist / "mildoc-lint", staging_dir)
+    _copy_pyinstaller_output(pyinstaller_output, staging_dir)
 
     shutil.copy2(REPO_ROOT / "LICENSE", staging_dir / "LICENSE")
     (staging_dir / "README.txt").write_text(
@@ -121,6 +135,18 @@ def build(dist_dir: Path, platform_tag: str, arch_tag: str) -> Path:
     if backup_dir.exists():
         shutil.rmtree(backup_dir)
     return artifact_dir
+
+
+def build(dist_dir: Path, platform_tag: str, arch_tag: str) -> Path:
+    pyinstaller = _require_pyinstaller()
+    raw_dist = _prepare_build_root()
+    _run_pyinstaller(pyinstaller, raw_dist)
+    return _stage_artifact(
+        dist_dir=dist_dir,
+        pyinstaller_output=raw_dist / "mildoc-lint",
+        platform_tag=platform_tag,
+        arch_tag=arch_tag,
+    )
 
 
 def _validate_native_tags(platform_tag: str, arch_tag: str) -> None:
