@@ -1,0 +1,59 @@
+name: Rule request
+description: Propose a deterministic rule backed by public source material.
+title: "[rule]: "
+labels: ["rule-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Rule requests must be deterministic and backed by public sources.
+        Do not submit CUI, PII, real unit documents, customer data, controlled technical data, operational details, or non-public checklist content.
+  - type: input
+    id: rule_family
+    attributes:
+      label: Rule family
+      placeholder: "cui, pii, osmeac, naval, or namp"
+    validations:
+      required: true
+  - type: textarea
+    id: public_source
+    attributes:
+      label: Public source
+      description: Link to the public source and cite the specific section or page if available.
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: deterministic_check
+    attributes:
+      label: Deterministic check
+      description: Describe the mechanical signal the rule should detect.
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Boundary
+      description: State what this rule must not decide or claim.
+      placeholder: "Example: this checks marking shape only; it does not determine whether content is actually CUI."
+    validations:
+      required: true
+  - type: textarea
+    id: synthetic_examples
+    attributes:
+      label: Synthetic examples
+      description: Provide pass/fail examples using synthetic text only.
+      render: markdown
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: The source is public.
+          required: true
+        - label: The request contains only synthetic examples.
+          required: true
+        - label: The request does not include compliance-certification, classification-review, or operational-planning claims.
+          required: true
