@@ -16,6 +16,6 @@ Bring forms.
 
 Controlled by: CDS/SYNTHETIC
 CUI Category: CTI
-POC: synthetic@example.mil
+POC: synthetic@example.invalid
 
-John Doe SSN 123-45-6789
+PERSON-EXAMPLE SSN 123-45-6789

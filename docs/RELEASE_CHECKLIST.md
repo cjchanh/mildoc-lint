@@ -8,9 +8,12 @@ Run before any tag, release, or public-push action. Fail-closed: if any item fai
 - [ ] `ruff check .` passes
 - [ ] If `ruff` reports a pre-existing style issue that is intentional, document it separately in this checklist before release
 - [ ] `mildoc-lint --version` returns `mildoc-lint 0.2.0`
+- [ ] README commands are smoke-tested (run each shell snippet in the README's Run section)
 - [ ] `mildoc-lint lint examples --profile all` runs and reports findings
-- [ ] `mildoc-lint lint examples --profile all --format sarif --out /tmp/check.sarif` writes a valid SARIF 2.1.0 file
+- [ ] Example SARIF is generated: `mildoc-lint lint examples --profile all --format sarif --out examples/mildoc-example.sarif` writes a valid SARIF 2.1.0 file
 - [ ] `mildoc-lint rules` lists every authority key
+- [ ] No unsupported compliance claims in any tracked Markdown (enforced by `tests/test_no_overclaim.py` and `tests/test_public_boundary.py`)
+- [ ] No real CUI, PII, unit documents, maintenance records, or controlled technical data in any tracked file
 
 ## Repo hygiene
 

@@ -302,7 +302,7 @@
           "properties": {
             "recommendation": "Place standalone \"CUI\" at the bottom/footer of each page/logical page containing CUI.",
             "severity": "error",
-            "snippet": "John Doe SSN 123-45-6789",
+            "snippet": "PERSON-EXAMPLE SSN 123-45-6789",
             "source": "DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
           },
           "ruleId": "cui.missing_bottom_banner"
@@ -316,7 +316,7 @@
                   "uri": "examples/bad_cui_order.md"
                 },
                 "region": {
-                  "startColumn": 14,
+                  "startColumn": 20,
                   "startLine": 21
                 }
               }
@@ -328,7 +328,7 @@
           "properties": {
             "recommendation": "Remove, redact, or confirm proper authorization, marking, and handling before distribution.",
             "severity": "error",
-            "snippet": "John Doe SSN ***-**-****",
+            "snippet": "PERSON-EXAMPLE SSN ***-**-****",
             "source": "NIST SP 800-171 Rev. 3 - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf"
           },
           "ruleId": "pii.ssn"

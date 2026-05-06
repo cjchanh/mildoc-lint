@@ -17,20 +17,23 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 # match " ing-authority " (with leading space) so we catch the corruption form
 # but not "designating-authority" which has no space before "ing-authority".
 CORRUPTION_FRAGMENTS = [
-    "They ing-authority",         # explicit corruption form (sentence-start)
-    " ing-authority call",        # space-isolated truncation
-    " ing-authority decision",    # space-isolated truncation
-    "tha s ",                     # mid-word break of "that"
-    "tha t ",                     # spaced mid-word break of "that"
-    "read round the",             # truncation of "read as ... ground the"
-    "compliance claims.at ",      # docstring-mash of "claims." + "Static check that"
-    "compliance claims. at ",     # space-separated mash variant
-    "Markd own",                  # broken word "Markdown"
-    "se parately",                # broken "separately"
-    "eparately) f check",         # mash of "separately)" + "ruff check"
-    "f check . passes",           # truncation of "ruff check . passes"
-    " orders tha s",              # broken "orders that"
-    "the code.\n\n",              # truncated standalone capability claim if it appears as paragraph
+    "They ing-authority",                        # explicit corruption form (sentence-start)
+    " ing-authority call",                       # space-isolated truncation
+    " ing-authority decision",                   # space-isolated truncation
+    "tha s ",                                    # mid-word break of "that"
+    "tha t ",                                    # spaced mid-word break of "that"
+    "read round the",                            # truncation of "read as ... ground the"
+    "compliance claims.at ",                     # docstring-mash of "claims." + "Static check that"
+    "compliance claims. at ",                    # space-separated mash variant
+    "Markd own",                                 # broken word "Markdown"
+    "se parately",                               # broken "separately"
+    "eparately) f check",                        # mash of "separately)" + "ruff check"
+    "f check . passes",                          # truncation of "ruff check . passes"
+    " orders tha s",                             # broken "orders that"
+    "the code.\n\n",                             # truncated capability claim as paragraph
+    "laundering of capability the code",         # malformed sentence fragment from older docstring
+    "references that g\n",                       # truncation: line ends with bare "g" (not "ground")
+    "references that g.",                        # truncation: sentence ends with bare "g"
 ]
 
 SCAN_GLOBS = [

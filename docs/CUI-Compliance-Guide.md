@@ -1,8 +1,8 @@
 # CUI Compliance Guide
 
-`mildoc-lint` checks CUI marking shape only. It does not make designating-authority decisions and does not certify compliance.
+`mildoc-lint` checks CUI marking shape only. It does not make designating-authority decisions. It does not determine whether information is actually CUI. It does not certify CMMC, RMF, NIST, or DoD compliance.
 
-The CUI rules catch mechanical errors that cause inspection findings and rework: invalid banner forms, missing or incomplete designation indicator blocks, legacy markings (FOUO/SBU), and inconsistent portion marking. They do not decide whether content is actually CUI.
+The CUI rules catch mechanical errors that cause inspection findings and rework: invalid banner forms, missing or incomplete designation indicator blocks, legacy markings (FOUO/SBU), and inconsistent portion marking.
 
 Authoritative references are listed in [`SOURCES.md`](SOURCES.md). All rules are tied to public DoD guidance only.
 
