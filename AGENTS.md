@@ -4,7 +4,7 @@
 
 `mildoc-lint` is a local-first Python CLI for deterministic document-shape linting over synthetic defense-adjacent examples.
 
-Current status: alpha public-release candidate at version 0.2.0.
+Current status: alpha public-release candidate at version 0.2.1.
 
 ## Build And Verification
 

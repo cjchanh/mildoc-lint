@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from cds_mildoc import __version__
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 # Literal substrings that should never appear in clean prose.
@@ -80,23 +82,13 @@ def test_no_corruption_fragments_in_repo() -> None:
     )
 
 
-def test_release_checklist_version_matches_pyproject() -> None:
+def test_release_checklist_version_matches_package_version() -> None:
     """Catch stale version references in the release checklist."""
-    pyproject = (REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    # Extract the version line (single source of truth)
-    version = None
-    for line in pyproject.splitlines():
-        line = line.strip()
-        if line.startswith("version = "):
-            version = line.split("=", 1)[1].strip().strip('"').strip("'")
-            break
-    assert version, "could not parse version from pyproject.toml"
-
     checklist = REPO_ROOT / "docs" / "RELEASE_CHECKLIST.md"
     if not checklist.exists():
         return  # checklist optional
     text = checklist.read_text(encoding="utf-8")
-    expected = f"mildoc-lint {version}"
+    expected = f"mildoc-lint {__version__}"
     assert expected in text, (
         f"docs/RELEASE_CHECKLIST.md does not reference current version {expected!r}"
     )

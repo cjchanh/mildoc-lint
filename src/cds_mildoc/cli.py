@@ -5,6 +5,7 @@ import json
 import sys
 from pathlib import Path
 
+from ._version import __version__
 from .archivist import (
     diff_documents,
     ingest_document,
@@ -24,7 +25,7 @@ def build_parser() -> argparse.ArgumentParser:
         prog="mildoc-lint",
         description="Local-first linter for CUI markings, PII indicators, O-SMEAC orders, naval correspondence, and NAMP/CSEC records.",
     )
-    parser.add_argument("--version", action="version", version="mildoc-lint 0.2.0")
+    parser.add_argument("--version", action="version", version=f"mildoc-lint {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
     lint = sub.add_parser("lint", help="lint one document or a directory of documents")

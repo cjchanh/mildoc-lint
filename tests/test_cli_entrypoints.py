@@ -10,6 +10,7 @@ from contextlib import redirect_stderr, redirect_stdout
 
 import pytest
 
+from cds_mildoc import __version__
 from cds_mildoc.cli import build_parser, main
 
 
@@ -25,7 +26,7 @@ def test_version_string_reports_mildoc_lint() -> None:
         with redirect_stdout(buf), redirect_stderr(buf):
             parser.parse_args(["--version"])
     assert excinfo.value.code == 0
-    assert "mildoc-lint 0.2.0" in buf.getvalue()
+    assert f"mildoc-lint {__version__}" in buf.getvalue()
 
 
 def test_lint_examples_runs_without_crash(tmp_path) -> None:

@@ -21,6 +21,17 @@ It is not affiliated with the U.S. Department of Defense, the U.S. Navy, the U.S
 
 ## Install
 
+For the full install matrix, see [`docs/INSTALL.md`](docs/INSTALL.md).
+
+After PyPI publication, install the CLI with `pipx`:
+
+```bash
+pipx install mildoc-lint
+mildoc-lint --version
+```
+
+From source:
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -139,6 +150,7 @@ mildoc-lint lint examples --profile all
 ```
 
 Release-readiness checklist: [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md).
+Packaging notes: [`docs/PACKAGING.md`](docs/PACKAGING.md) and [`docs/RELEASE_ARTIFACTS.md`](docs/RELEASE_ARTIFACTS.md).
 
 ## Roadmap
 

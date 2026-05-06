@@ -12,7 +12,7 @@ A receipt is a JSON manifest with the schema `mildoc.receipt.v1`:
 {
   "schema": "mildoc.receipt.v1",
   "tool": "mildoc-lint",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "profile": "osmeac",
   "document_sha256": "ab9dff855d69de210620ff…",
   "rule_pack_sha256": "f557527e18580b9a7d2467…",

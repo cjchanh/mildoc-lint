@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Optional
 from uuid import uuid4
 
+from .._version import __version__
 from ..engine import expand_profile, lint_document
 from ..parsers import load_document
 from ..references import AUTHORITIES
@@ -28,7 +29,7 @@ from .receipts import (
     write_receipt,
 )
 
-TOOL_VERSION = "0.2.0"
+TOOL_VERSION = __version__
 
 
 def _utc_now() -> str:
