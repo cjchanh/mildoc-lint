@@ -3,23 +3,33 @@
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 from pathlib import Path
 
 
-def _remove_path(path: Path) -> None:
-    if path.is_dir() and not path.is_symlink():
-        shutil.rmtree(path)
-    elif path.exists() or path.is_symlink():
-        path.unlink()
+_ARTIFACT_NAME_RE = re.compile(
+    r"^mildoc-lint-(?P<platform>linux|macos|windows)-(?P<arch>x64|arm64)$"
+)
 
 
-def _archive_settings(artifact_name: str) -> tuple[str, str]:
-    if "-windows-" in artifact_name:
-        return "zip", ".zip"
-    if "-linux-" in artifact_name or "-macos-" in artifact_name:
-        return "gztar", ".tar.gz"
-    raise ValueError(f"unsupported artifact name: {artifact_name}")
+def _platform_tag_from_artifact_name(artifact_name: str) -> str:
+    match = _ARTIFACT_NAME_RE.fullmatch(artifact_name)
+    if match is None:
+        raise ValueError(f"unsupported artifact name: {artifact_name}")
+    return match.group("platform")
+
+
+def _archive_settings(platform_tag: str) -> tuple[str, str]:
+    formats = {
+        "windows": ("zip", ".zip"),
+        "linux": ("gztar", ".tar.gz"),
+        "macos": ("gztar", ".tar.gz"),
+    }
+    try:
+        return formats[platform_tag]
+    except KeyError as exc:
+        raise ValueError(f"unsupported platform tag: {platform_tag}") from exc
 
 
 def package_release_artifact(
@@ -29,16 +39,19 @@ def package_release_artifact(
     if not dist_dir.exists() or not dist_dir.is_dir():
         raise FileNotFoundError(f"dist directory does not exist: {dist_dir}")
 
-    release_dir.mkdir(exist_ok=True)
+    release_dir.mkdir(parents=True, exist_ok=True)
+    staged = sorted(p for p in release_dir.iterdir() if not p.name.startswith("."))
+    if staged:
+        raise ValueError(f"release directory must be empty before staging: {staged}")
+
     folders = sorted(
         p for p in dist_dir.iterdir() if p.is_dir() and p.name.startswith("mildoc-lint-")
     )
     if len(folders) != 1:
         raise ValueError(f"expected one artifact folder, found {folders}")
 
-    archive_format, archive_suffix = _archive_settings(folders[0].name)
-    archive_path = release_dir / f"{folders[0].name}{archive_suffix}"
-    _remove_path(archive_path)
+    platform_tag = _platform_tag_from_artifact_name(folders[0].name)
+    archive_format, archive_suffix = _archive_settings(platform_tag)
     return Path(
         shutil.make_archive(
             str(release_dir / folders[0].name),

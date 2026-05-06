@@ -177,6 +177,18 @@ def test_package_release_artifact_uses_zip_for_windows(tmp_path: Path) -> None:
     assert archive.is_file()
 
 
+def test_package_release_artifact_rejects_non_empty_release_dir(tmp_path: Path) -> None:
+    dist = tmp_path / "dist"
+    release = tmp_path / "release"
+    artifact = dist / "mildoc-lint-linux-x64"
+    artifact.mkdir(parents=True)
+    release.mkdir()
+    (release / "stale.tar.gz").write_text("stale\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="release directory must be empty"):
+        package_release_artifact(dist, release)
+
+
 def test_package_release_artifact_rejects_unknown_artifact_name(tmp_path: Path) -> None:
     dist = tmp_path / "dist"
     release = tmp_path / "release"
