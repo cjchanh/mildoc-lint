@@ -25,11 +25,17 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
+          import os
           import platform
           import subprocess
           import sys
           import tempfile
           from pathlib import Path
+
+          constraints = Path("constraints/release.txt").resolve()
+          smoke_env = os.environ.copy()
+          smoke_env["PIP_BUILD_CONSTRAINT"] = str(constraints)
+          smoke_env["PIP_CONSTRAINT"] = str(constraints)
 
           artifacts = {
               "wheel": sorted(Path("dist").glob("*.whl")),
@@ -50,7 +56,11 @@ jobs:
               mildoc_lint = bin_dir / f"mildoc-lint{suffix}"
               cds_mildoc = bin_dir / f"cds-mildoc{suffix}"
 
-              subprocess.run([str(python), "-m", "pip", "install", str(matches[0])], check=True)
+              subprocess.run(
+                  [str(python), "-m", "pip", "install", str(matches[0])],
+                  check=True,
+                  env=smoke_env,
+              )
               subprocess.run([str(mildoc_lint), "--version"], check=True, cwd=smoke_root)
               subprocess.run([str(cds_mildoc), "--version"], check=True, cwd=smoke_root)
               subprocess.run([str(python), "-I", "-m", "cds_mildoc", "--version"], check=True, cwd=smoke_root)
@@ -96,7 +106,7 @@ jobs:
             platform: windows
             arch: x64
           - label: macos-x64
-            os: macos-13
+            os: macos-15-intel
             platform: macos
             arch: x64
           - label: macos-arm64

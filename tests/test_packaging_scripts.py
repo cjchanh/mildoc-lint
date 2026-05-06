@@ -259,3 +259,7 @@ def test_release_workflow_pins_publication_actions_and_toolchain() -> None:
     assert "python -m pip install -r constraints/release.txt" in workflow
     assert "python -m pip install --no-deps -e ." in workflow
     assert "python -m build --no-isolation" in workflow
+    assert 'smoke_env["PIP_BUILD_CONSTRAINT"] = str(constraints)' in workflow
+    assert 'smoke_env["PIP_CONSTRAINT"] = str(constraints)' in workflow
+    assert "macos-15-intel" in workflow
+    assert "macos-13" not in workflow
