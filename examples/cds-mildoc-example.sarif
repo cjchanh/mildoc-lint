@@ -1,0 +1,598 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startColumn": 1,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Invalid or legacy CUI banner form detected."
+          },
+          "properties": {
+            "recommendation": "Use standalone \"CUI\" for the banner/footer. Put categories and dissemination controls in the designation indicator block.",
+            "severity": "error",
+            "snippet": "CUI//CTI",
+            "source": "DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+          },
+          "ruleId": "cui.invalid_banner"
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startColumn": 1,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Missing standalone \"CUI\" top banner on logical page 1."
+          },
+          "properties": {
+            "recommendation": "Place standalone \"CUI\" at the top of each page/logical page containing CUI.",
+            "severity": "error",
+            "snippet": "CUI//CTI",
+            "source": "DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+          },
+          "ruleId": "cui.missing_top_banner"
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Missing O-SMEAC/SMEAC section: Command and Signal."
+          },
+          "properties": {
+            "recommendation": "Use the five-paragraph order structure: Situation, Mission, Execution, Administration and Logistics, Command and Signal.",
+            "severity": "error",
+            "snippet": null,
+            "source": "USMC FGHT 1004 Introduction to the Operations Order - https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+          },
+          "ruleId": "osmeac.missing_command_signal"
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startColumn": 1,
+                  "startLine": 17
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Missing DI block line: LDC: or Distribution Statement:"
+          },
+          "properties": {
+            "recommendation": "Complete the CUI designation indicator block on the first/title page.",
+            "severity": "error",
+            "snippet": null,
+            "source": "DoD CUI Designation Indicator Block marking tip - https://www.dodcui.mil/Home/Marking-Tips-for-CUI-Documents/CUI-Designation-Indicator-Block/"
+          },
+          "ruleId": "cui.di_missing_ldc_or_distribution"
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startColumn": 1,
+                  "startLine": 21
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Missing standalone \"CUI\" bottom/footer banner on logical page 1."
+          },
+          "properties": {
+            "recommendation": "Place standalone \"CUI\" at the bottom/footer of each page/logical page containing CUI.",
+            "severity": "error",
+            "snippet": "John Doe SSN 123-45-6789",
+            "source": "DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+          },
+          "ruleId": "cui.missing_bottom_banner"
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startColumn": 14,
+                  "startLine": 21
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Possible SSN detected."
+          },
+          "properties": {
+            "recommendation": "Remove, redact, or confirm proper authorization, marking, and handling before distribution.",
+            "severity": "error",
+            "snippet": "John Doe SSN ***-**-****",
+            "source": "NIST SP 800-171 Rev. 3 - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf"
+          },
+          "ruleId": "pii.ssn"
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/naval_letter_bad.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Missing naval correspondence label: Subj:"
+          },
+          "properties": {
+            "recommendation": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed.",
+            "severity": "error",
+            "snippet": null,
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+          },
+          "ruleId": "naval.missing_subj"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startLine": 8
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Mission statement may be incomplete; missing heuristic cues: when/timing cue, where/location cue, why/purpose cue."
+          },
+          "properties": {
+            "recommendation": "Tighten Mission around who, what, when, where, and why/purpose. Prefer one clear sentence.",
+            "severity": "warn",
+            "snippet": "Team conducts inspection tomorrow.",
+            "source": "USMC FGHT 1004 Introduction to the Operations Order - https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+          },
+          "ruleId": "osmeac.mission_incomplete_heuristic"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startLine": 11
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Execution section may be missing common subelements: commander's intent, concept of operations, tasks to subordinate units, coordinating instructions."
+          },
+          "properties": {
+            "recommendation": "Add only subelements needed to make subordinate action clear and coordinated.",
+            "severity": "warn",
+            "snippet": null,
+            "source": "USMC FGHT 1004 Introduction to the Operations Order - https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+          },
+          "ruleId": "osmeac.execution_missing_common_subelements"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/naval_letter_bad.md"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Naval correspondence labels appear out of expected order: From after To."
+          },
+          "properties": {
+            "recommendation": "Order common labels as From, To, Via, Subj, Ref, Encl.",
+            "severity": "warn",
+            "snippet": null,
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+          },
+          "ruleId": "naval.label_order"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/naval_letter_bad.md"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Use \"Subj:\" rather than \"Subject:\" in naval correspondence."
+          },
+          "properties": {
+            "recommendation": "Rename the label to \"Subj:\".",
+            "severity": "warn",
+            "snippet": null,
+            "source": "SECNAV M-5216.5 Department of the Navy Correspondence Manual - https://www.secnav.navy.mil/doni/manuals-secnav.aspx"
+          },
+          "ruleId": "naval.subject_label_not_subj"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "No portion markings detected. They are optional for unclassified DoD CUI documents but recommended by DoD training guidance."
+          },
+          "properties": {
+            "recommendation": "For higher-assurance drafts, portion mark titles, subjects, paragraphs, bullets, figures, charts, and tables consistently.",
+            "severity": "info",
+            "snippet": null,
+            "source": "DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+          },
+          "ruleId": "cui.portion_marking_recommended"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/bad_cui_order.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "No Orientation brief detected. O-SMEAC includes Orientation before SMEAC when required."
+          },
+          "properties": {
+            "recommendation": "For terrain-dependent or training orders, add a concise orientation before Situation.",
+            "severity": "info",
+            "snippet": null,
+            "source": "USMC FGHT 1004 Introduction to the Operations Order - https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+          },
+          "ruleId": "osmeac.orientation_absent"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/namp_discrepancy.md"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "NAMP/CSEC-style record includes the baseline fields checked by the open-core linter."
+          },
+          "properties": {
+            "recommendation": null,
+            "severity": "info",
+            "snippet": null,
+            "source": "NAVAIR CSEC Help Guide - https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+          },
+          "ruleId": "namp.record_shape_ok"
+        }
+      ],
+      "tool": {
+        "driver": {
+          "informationUri": "https://github.com/cds/cds-mildoc-linter",
+          "name": "cds-mildoc-linter",
+          "rules": [
+            {
+              "help": {
+                "text": "Use standalone \"CUI\" for the banner/footer. Put categories and dissemination controls in the designation indicator block."
+              },
+              "id": "cui.invalid_banner",
+              "name": "cui.invalid_banner",
+              "properties": {
+                "tags": [
+                  "cui",
+                  "marking"
+                ]
+              },
+              "shortDescription": {
+                "text": "Invalid or legacy CUI banner form detected."
+              }
+            },
+            {
+              "help": {
+                "text": "Place standalone \"CUI\" at the top of each page/logical page containing CUI."
+              },
+              "id": "cui.missing_top_banner",
+              "name": "cui.missing_top_banner",
+              "properties": {
+                "tags": [
+                  "cui",
+                  "marking"
+                ]
+              },
+              "shortDescription": {
+                "text": "Missing standalone \"CUI\" top banner on logical page 1."
+              }
+            },
+            {
+              "help": {
+                "text": "Use the five-paragraph order structure: Situation, Mission, Execution, Administration and Logistics, Command and Signal."
+              },
+              "id": "osmeac.missing_command_signal",
+              "name": "osmeac.missing_command_signal",
+              "properties": {
+                "tags": [
+                  "orders",
+                  "osmeac"
+                ]
+              },
+              "shortDescription": {
+                "text": "Missing O-SMEAC/SMEAC section: Command and Signal."
+              }
+            },
+            {
+              "help": {
+                "text": "Complete the CUI designation indicator block on the first/title page."
+              },
+              "id": "cui.di_missing_ldc_or_distribution",
+              "name": "cui.di_missing_ldc_or_distribution",
+              "properties": {
+                "tags": [
+                  "cui",
+                  "marking"
+                ]
+              },
+              "shortDescription": {
+                "text": "Missing DI block line: LDC: or Distribution Statement:"
+              }
+            },
+            {
+              "help": {
+                "text": "Place standalone \"CUI\" at the bottom/footer of each page/logical page containing CUI."
+              },
+              "id": "cui.missing_bottom_banner",
+              "name": "cui.missing_bottom_banner",
+              "properties": {
+                "tags": [
+                  "cui",
+                  "marking"
+                ]
+              },
+              "shortDescription": {
+                "text": "Missing standalone \"CUI\" bottom/footer banner on logical page 1."
+              }
+            },
+            {
+              "help": {
+                "text": "Remove, redact, or confirm proper authorization, marking, and handling before distribution."
+              },
+              "id": "pii.ssn",
+              "name": "pii.ssn",
+              "properties": {
+                "tags": [
+                  "pii",
+                  "cui"
+                ]
+              },
+              "shortDescription": {
+                "text": "Possible SSN detected."
+              }
+            },
+            {
+              "help": {
+                "text": "Use standard naval correspondence line labels: From:, To:, Subj:, and add Via:/Ref:/Encl: as needed."
+              },
+              "id": "naval.missing_subj",
+              "name": "naval.missing_subj",
+              "properties": {
+                "tags": [
+                  "naval",
+                  "correspondence"
+                ]
+              },
+              "shortDescription": {
+                "text": "Missing naval correspondence label: Subj:"
+              }
+            },
+            {
+              "help": {
+                "text": "Tighten Mission around who, what, when, where, and why/purpose. Prefer one clear sentence."
+              },
+              "id": "osmeac.mission_incomplete_heuristic",
+              "name": "osmeac.mission_incomplete_heuristic",
+              "properties": {
+                "tags": [
+                  "orders",
+                  "osmeac"
+                ]
+              },
+              "shortDescription": {
+                "text": "Mission statement may be incomplete; missing heuristic cues: when/timing cue, where/location cue, why/purpose cue."
+              }
+            },
+            {
+              "help": {
+                "text": "Add only subelements needed to make subordinate action clear and coordinated."
+              },
+              "id": "osmeac.execution_missing_common_subelements",
+              "name": "osmeac.execution_missing_common_subelements",
+              "properties": {
+                "tags": [
+                  "orders",
+                  "osmeac"
+                ]
+              },
+              "shortDescription": {
+                "text": "Execution section may be missing common subelements: commander's intent, concept of operations, tasks to subordinate uni"
+              }
+            },
+            {
+              "help": {
+                "text": "Order common labels as From, To, Via, Subj, Ref, Encl."
+              },
+              "id": "naval.label_order",
+              "name": "naval.label_order",
+              "properties": {
+                "tags": [
+                  "naval",
+                  "correspondence"
+                ]
+              },
+              "shortDescription": {
+                "text": "Naval correspondence labels appear out of expected order: From after To."
+              }
+            },
+            {
+              "help": {
+                "text": "Rename the label to \"Subj:\"."
+              },
+              "id": "naval.subject_label_not_subj",
+              "name": "naval.subject_label_not_subj",
+              "properties": {
+                "tags": [
+                  "naval",
+                  "correspondence"
+                ]
+              },
+              "shortDescription": {
+                "text": "Use \"Subj:\" rather than \"Subject:\" in naval correspondence."
+              }
+            },
+            {
+              "help": {
+                "text": "For higher-assurance drafts, portion mark titles, subjects, paragraphs, bullets, figures, charts, and tables consistently."
+              },
+              "id": "cui.portion_marking_recommended",
+              "name": "cui.portion_marking_recommended",
+              "properties": {
+                "tags": [
+                  "cui",
+                  "marking"
+                ]
+              },
+              "shortDescription": {
+                "text": "No portion markings detected. They are optional for unclassified DoD CUI documents but recommended by DoD training guida"
+              }
+            },
+            {
+              "help": {
+                "text": "For terrain-dependent or training orders, add a concise orientation before Situation."
+              },
+              "id": "osmeac.orientation_absent",
+              "name": "osmeac.orientation_absent",
+              "properties": {
+                "tags": [
+                  "orders",
+                  "osmeac"
+                ]
+              },
+              "shortDescription": {
+                "text": "No Orientation brief detected. O-SMEAC includes Orientation before SMEAC when required."
+              }
+            },
+            {
+              "help": {
+                "text": "NAMP/CSEC-style record includes the baseline fields checked by the open-core linter."
+              },
+              "id": "namp.record_shape_ok",
+              "name": "namp.record_shape_ok",
+              "properties": {
+                "tags": [
+                  "namp",
+                  "csec",
+                  "readiness"
+                ]
+              },
+              "shortDescription": {
+                "text": "NAMP/CSEC-style record includes the baseline fields checked by the open-core linter."
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}
