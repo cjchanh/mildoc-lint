@@ -1,6 +1,6 @@
 # Public Sources
 
-`mildoc-lint` rules cite public, unclassified DoD, USMC, Navy, and NIST references only. None of these citations should be read as a compliance certification. They are public references that ground the deterministic rule logic.
+The references below are public, unclassified DoD, USMC, Navy, and NIST sources. They explain the deterministic rule logic in `mildoc-lint`. They are not a certification basis. None of these citations should be read as a compliance certification.
 
 To print sources from the CLI:
 

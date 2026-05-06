@@ -1,7 +1,9 @@
-"""Static check that README and docs do not contain unsupported compliance claims.
+"""Static check on repository Markdown for unsupported compliance claims.
 
-These claims would constitute laundering of capability the code does not have.
-The test enforces a banned-phrase list against repo-rooted Markdown documents.
+The repository must not assert capabilities the code does not have. This test
+enforces a banned-phrase list across README and ``docs/`` Markdown files.
+Files that intentionally enumerate banned phrases for documentation (the
+release checklist, the contributor guide, and the claims map) are excluded.
 """
 from __future__ import annotations
 

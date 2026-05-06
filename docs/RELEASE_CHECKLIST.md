@@ -5,8 +5,9 @@ Run before any tag, release, or public-push action. Fail-closed: if any item fai
 ## Code gates
 
 - [ ] `pytest` passes
-- [ ] `ruff check .` passes (or pre-existing style is reported separately)
-- [ ] `mildoc-lint --version` returns `mildoc-lint 0.1.0`
+- [ ] `ruff check .` passes
+- [ ] If `ruff` reports a pre-existing style issue that is intentional, document it separately in this checklist before release
+- [ ] `mildoc-lint --version` returns `mildoc-lint 0.2.0`
 - [ ] `mildoc-lint lint examples --profile all` runs and reports findings
 - [ ] `mildoc-lint lint examples --profile all --format sarif --out /tmp/check.sarif` writes a valid SARIF 2.1.0 file
 - [ ] `mildoc-lint rules` lists every authority key

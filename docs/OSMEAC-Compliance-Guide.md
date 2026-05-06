@@ -1,6 +1,6 @@
 # O-SMEAC Compliance Guide
 
-`mildoc-lint`'s OSMEAC profile lints **structure** for orders that follow the USMC O-SMEAC / five-paragraph order convention. It is an unclassified, training-grade structural linter. It does not generate plans, does not validate tactical soundness, and does not replace command review.
+`mildoc-lint` is an unclassified, training-grade structural linter for orders that follow the USMC O-SMEAC / five-paragraph order convention. It does not generate tactical plans or validate tactical soundness. It does not replace command review.
 
 Authoritative references are listed in [`SOURCES.md`](SOURCES.md).
 
