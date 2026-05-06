@@ -19,6 +19,14 @@ Run a scan against a local document or folder:
 mildoc-lint lint /path/to/docs --profile all
 ```
 
+PDF input requires the optional PDF extra:
+
+```bash
+pipx install "mildoc-lint[pdf]"
+# or
+pip install "mildoc-lint[pdf]"
+```
+
 When installed from a source checkout, the repo's `examples/` corpus can be used
 as a synthetic smoke test and intentionally emits findings.
 
@@ -44,9 +52,11 @@ mildoc-lint --version
 
 ## 3. Run Standalone Binary
 
-Download the artifact for your platform and unpack it:
+Download the `build-artifacts` workflow artifact ZIP from GitHub Actions,
+extract it, then unpack the enclosed platform archive:
 
 ```bash
+unzip mildoc-lint-linux-x64.zip
 tar -xzf mildoc-lint-linux-x64.tar.gz
 cd mildoc-lint-linux-x64
 ./mildoc-lint --version

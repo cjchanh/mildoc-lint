@@ -49,7 +49,10 @@ def _read_pdf(path: Path) -> str:
     try:
         from pypdf import PdfReader  # type: ignore
     except Exception as exc:  # pragma: no cover - optional dependency branch
-        raise ParserError("PDF parsing requires optional dependency: pip install cds-mildoc-linter[pdf]") from exc
+        raise ParserError(
+            'PDF parsing requires optional dependency: install with `pipx install "mildoc-lint[pdf]"`, '
+            '`pip install "mildoc-lint[pdf]"`, or, from a checkout, `pip install -e ".[pdf]"`'
+        ) from exc
 
     try:
         reader = PdfReader(str(path))

@@ -32,8 +32,8 @@ Issues = "https://github.com/cjchanh/mildoc-lint/issues"
 
 [project.optional-dependencies]
 pdf = ["pypdf>=4.0.0"]
-build = ["build>=1.0", "pyinstaller>=6.0"]
-dev = ["build>=1.0", "pytest>=7.0", "ruff>=0.5.0", "pyinstaller>=6.0"]
+build = ["build>=1.0", "pyinstaller>=6.0", "pypdf>=4.0.0"]
+dev = ["build>=1.0", "pytest>=7.0", "ruff>=0.5.0", "pyinstaller>=6.0", "pypdf>=4.0.0"]
 
 [project.scripts]
 mildoc-lint = "cds_mildoc.cli:main"

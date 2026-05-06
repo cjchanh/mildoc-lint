@@ -166,9 +166,17 @@ def main() -> int:
     parser.add_argument("--dist-dir", default="dist", help="output directory")
     parser.add_argument("--platform-tag", default=_platform_tag())
     parser.add_argument("--arch-tag", default=_arch_tag())
+    parser.add_argument(
+        "--validate-native-tags",
+        action="store_true",
+        help="validate platform and architecture tags without building",
+    )
     args = parser.parse_args()
 
     _validate_native_tags(args.platform_tag, args.arch_tag)
+    if args.validate_native_tags:
+        return 0
+
     artifact = build(
         dist_dir=(REPO_ROOT / args.dist_dir).resolve(),
         platform_tag=args.platform_tag,

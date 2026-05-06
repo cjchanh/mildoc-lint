@@ -37,6 +37,7 @@ dist/
     mildoc-lint
     README.txt
     LICENSE
+    _internal/  # PyInstaller runtime support files
 ```
 
 On Windows, the executable is `mildoc-lint.exe`.

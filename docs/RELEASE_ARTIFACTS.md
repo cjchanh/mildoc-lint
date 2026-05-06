@@ -7,12 +7,14 @@ to install Python before running the CLI.
 
 | Platform | Artifact | Contents |
 |---|---|---|
-| macOS arm64 | `mildoc-lint-macos-arm64.tar.gz` | `mildoc-lint`, `README.txt`, `LICENSE` |
-| macOS x64 | `mildoc-lint-macos-x64.tar.gz` | `mildoc-lint`, `README.txt`, `LICENSE` |
-| Windows x64 | `mildoc-lint-windows-x64.zip` | `mildoc-lint.exe`, `README.txt`, `LICENSE` |
-| Linux x64 | `mildoc-lint-linux-x64.tar.gz` | `mildoc-lint`, `README.txt`, `LICENSE` |
+| macOS arm64 | `mildoc-lint-macos-arm64.tar.gz` | `mildoc-lint`, `README.txt`, `LICENSE`, `_internal/` |
+| macOS x64 | `mildoc-lint-macos-x64.tar.gz` | `mildoc-lint`, `README.txt`, `LICENSE`, `_internal/` |
+| Windows x64 | `mildoc-lint-windows-x64.zip` | `mildoc-lint.exe`, `README.txt`, `LICENSE`, `_internal/` |
+| Linux x64 | `mildoc-lint-linux-x64.tar.gz` | `mildoc-lint`, `README.txt`, `LICENSE`, `_internal/` |
 
 Linux arm64 is not part of the first artifact matrix.
+Keep `_internal/` next to the executable; it contains PyInstaller runtime support
+files required by the standalone build.
 
 ## Checksum Verification
 
