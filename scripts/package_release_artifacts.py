@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import platform
 import shutil
 from pathlib import Path
 
@@ -15,17 +14,17 @@ def _remove_path(path: Path) -> None:
         path.unlink()
 
 
-def _archive_settings(system_name: str | None = None) -> tuple[str, str]:
-    system = (system_name or platform.system()).lower()
-    if system == "windows":
+def _archive_settings(artifact_name: str) -> tuple[str, str]:
+    if "-windows-" in artifact_name:
         return "zip", ".zip"
-    return "gztar", ".tar.gz"
+    if "-linux-" in artifact_name or "-macos-" in artifact_name:
+        return "gztar", ".tar.gz"
+    raise ValueError(f"unsupported artifact name: {artifact_name}")
 
 
 def package_release_artifact(
     dist_dir: Path,
     release_dir: Path,
-    system_name: str | None = None,
 ) -> Path:
     if not dist_dir.exists() or not dist_dir.is_dir():
         raise FileNotFoundError(f"dist directory does not exist: {dist_dir}")
@@ -37,7 +36,7 @@ def package_release_artifact(
     if len(folders) != 1:
         raise ValueError(f"expected one artifact folder, found {folders}")
 
-    archive_format, archive_suffix = _archive_settings(system_name)
+    archive_format, archive_suffix = _archive_settings(folders[0].name)
     archive_path = release_dir / f"{folders[0].name}{archive_suffix}"
     _remove_path(archive_path)
     return Path(

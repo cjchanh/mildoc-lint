@@ -28,21 +28,38 @@ def test_checksum_artifacts_is_deterministic(tmp_path: Path) -> None:
 def test_checksum_artifacts_excludes_generated_cache_and_existing_checksum(tmp_path: Path) -> None:
     artifact = tmp_path / "artifact"
     cache = artifact / "__pycache__"
-    nested = artifact / "nested"
     artifact.mkdir()
     cache.mkdir()
-    nested.mkdir()
     (artifact / "payload.txt").write_text("payload\n", encoding="utf-8")
     (artifact / "SHA256SUMS").write_text("old\n", encoding="utf-8")
     (cache / "payload.pyc").write_bytes(b"cache")
-    (nested / "ignored.txt").write_text("ignored\n", encoding="utf-8")
 
     text = write_checksums(artifact).read_text(encoding="utf-8")
 
     assert "payload.txt" in text
     assert "SHA256SUMS" not in text
     assert "__pycache__" not in text
-    assert "ignored.txt" not in text
+
+
+def test_checksum_artifacts_rejects_nested_payload_without_recursive(tmp_path: Path) -> None:
+    artifact = tmp_path / "artifact"
+    nested = artifact / "_internal"
+    nested.mkdir(parents=True)
+    (nested / "payload.dylib").write_bytes(b"payload")
+
+    with pytest.raises(ValueError, match="nested directories: _internal"):
+        write_checksums(artifact)
+
+
+def test_checksum_artifacts_can_include_nested_payload_recursively(tmp_path: Path) -> None:
+    artifact = tmp_path / "artifact"
+    nested = artifact / "_internal"
+    nested.mkdir(parents=True)
+    (nested / "payload.dylib").write_bytes(b"payload")
+
+    text = write_checksums(artifact, recursive=True).read_text(encoding="utf-8")
+
+    assert "_internal/payload.dylib" in text
 
 
 def test_checksum_artifacts_rejects_empty_artifact_dir(tmp_path: Path) -> None:
@@ -140,7 +157,7 @@ def test_package_release_artifact_archives_single_platform_folder(tmp_path: Path
     artifact.mkdir(parents=True)
     (artifact / "mildoc-lint").write_text("binary\n", encoding="utf-8")
 
-    archive = package_release_artifact(dist, release, system_name="Linux")
+    archive = package_release_artifact(dist, release)
 
     assert archive == release / "mildoc-lint-linux-x64.tar.gz"
     assert archive.is_file()
@@ -154,10 +171,20 @@ def test_package_release_artifact_uses_zip_for_windows(tmp_path: Path) -> None:
     artifact.mkdir(parents=True)
     (artifact / "mildoc-lint.exe").write_text("binary\n", encoding="utf-8")
 
-    archive = package_release_artifact(dist, release, system_name="Windows")
+    archive = package_release_artifact(dist, release)
 
     assert archive == release / "mildoc-lint-windows-x64.zip"
     assert archive.is_file()
+
+
+def test_package_release_artifact_rejects_unknown_artifact_name(tmp_path: Path) -> None:
+    dist = tmp_path / "dist"
+    release = tmp_path / "release"
+    artifact = dist / "mildoc-lint-plan9-x64"
+    artifact.mkdir(parents=True)
+
+    with pytest.raises(ValueError, match="unsupported artifact name"):
+        package_release_artifact(dist, release)
 
 
 def test_build_binary_requires_pdf_build_dependency(monkeypatch: pytest.MonkeyPatch) -> None:
