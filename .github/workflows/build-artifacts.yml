@@ -166,4 +166,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: release-${{ env.ARTIFACT_NAME }}
-          path: release/*
+          path: |
+            dist/*.whl
+            dist/*.tar.gz
+            release/*
