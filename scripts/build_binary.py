@@ -51,8 +51,10 @@ def _readme_text(platform_tag: str, arch_tag: str) -> str:
 
 
 def _copy_pyinstaller_output(source: Path, destination: Path) -> None:
-    if destination.exists():
+    if destination.is_dir():
         shutil.rmtree(destination)
+    elif destination.exists():
+        destination.unlink()
     destination.parent.mkdir(parents=True, exist_ok=True)
 
     if source.is_dir():

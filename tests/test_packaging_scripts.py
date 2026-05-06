@@ -62,6 +62,20 @@ def test_copy_pyinstaller_output_only_replaces_destination(tmp_path: Path) -> No
     assert (sibling / "mildoc-lint").read_text(encoding="utf-8") == "existing\n"
 
 
+def test_copy_pyinstaller_output_replaces_stale_destination_file(tmp_path: Path) -> None:
+    source = tmp_path / "raw" / "mildoc-lint"
+    destination = tmp_path / "dist" / "mildoc-lint-macos-arm64"
+    source.mkdir(parents=True)
+    destination.parent.mkdir(parents=True)
+    (source / "mildoc-lint").write_text("new\n", encoding="utf-8")
+    destination.write_text("interrupted build marker\n", encoding="utf-8")
+
+    build_binary._copy_pyinstaller_output(source, destination)
+
+    assert destination.is_dir()
+    assert (destination / "mildoc-lint").read_text(encoding="utf-8") == "new\n"
+
+
 def test_build_binary_replaces_artifact_without_leaving_backup(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

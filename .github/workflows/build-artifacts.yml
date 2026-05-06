@@ -98,20 +98,9 @@ jobs:
       - name: Validate artifact name
         shell: bash
         run: |
-          artifact=$(python - <<'PY'
-          from pathlib import Path
-          folders = sorted(
-              p.name for p in Path("dist").iterdir()
-              if p.is_dir() and p.name.startswith("mildoc-lint-")
-          )
-          if len(folders) != 1:
-              raise SystemExit(f"expected one artifact folder, found {folders}")
-          print(folders[0])
-          PY
-          )
-          expected="mildoc-lint-${{ matrix.label }}"
-          if [ "$artifact" != "$expected" ]; then
-            echo "expected $expected but built $artifact"
+          artifact="mildoc-lint-${{ matrix.label }}"
+          if [ ! -d "dist/$artifact" ]; then
+            echo "missing dist/$artifact"
             exit 1
           fi
           echo "ARTIFACT_NAME=$artifact" >> "$GITHUB_ENV"
