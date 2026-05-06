@@ -1,2 +1,3 @@
+include constraints/release.txt
 include scripts/*.py
 recursive-include packaging/pyinstaller *.py *.spec

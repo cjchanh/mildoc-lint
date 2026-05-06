@@ -1,6 +1,7 @@
 """Packaging helper regression tests."""
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pytest
@@ -9,6 +10,8 @@ from scripts import build_binary
 from scripts.build_binary import _readme_text
 from scripts.checksum_artifacts import write_checksums
 from scripts.package_release_artifacts import package_release_artifact
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_checksum_artifacts_is_deterministic(tmp_path: Path) -> None:
@@ -223,3 +226,36 @@ def test_build_binary_rejects_tag_mismatch(monkeypatch: pytest.MonkeyPatch) -> N
 
     with pytest.raises(SystemExit, match="tag mismatch"):
         build_binary._validate_native_tags("windows", "x64")
+
+
+def test_release_constraints_pin_public_build_toolchain() -> None:
+    constraints = REPO_ROOT / "constraints" / "release.txt"
+    lines = [
+        line.strip()
+        for line in constraints.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.startswith("#")
+    ]
+    required = {
+        "build",
+        "pyinstaller",
+        "pypdf",
+        "pytest",
+        "ruff",
+        "setuptools",
+        "wheel",
+    }
+
+    assert required <= {line.split("==", maxsplit=1)[0] for line in lines}
+    assert all("==" in line and ">=" not in line for line in lines)
+
+
+def test_release_workflow_pins_publication_actions_and_toolchain() -> None:
+    workflow = (REPO_ROOT / ".github" / "workflows" / "build-artifacts.yml").read_text(
+        encoding="utf-8"
+    )
+
+    assert not re.search(r"actions/[a-z-]+@v\d+", workflow)
+    assert len(re.findall(r"actions/[a-z-]+@[0-9a-f]{40}", workflow)) == 6
+    assert "python -m pip install -r constraints/release.txt" in workflow
+    assert "python -m pip install --no-deps -e ." in workflow
+    assert "python -m build --no-isolation" in workflow
