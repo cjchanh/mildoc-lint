@@ -9,7 +9,7 @@ description = "Local-first linter for CUI markings, PII indicators, USMC O-SMEAC
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
-authors = [{ name = "CDS" }]
+authors = [{ name = "Centennial Defense Systems" }]
 keywords = ["cui", "dod", "usmc", "navy", "namp", "osmeac", "linter", "documents"]
 classifiers = [
   "Development Status :: 3 - Alpha",
