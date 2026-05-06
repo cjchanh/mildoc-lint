@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import platform
 import shutil
 from pathlib import Path
@@ -66,7 +67,27 @@ def _copy_pyinstaller_output(source: Path, destination: Path) -> None:
     raise FileNotFoundError(f"PyInstaller output not found: {source}")
 
 
-def _require_pyinstaller():
+def _module_is_missing(module: str) -> bool:
+    try:
+        return importlib.util.find_spec(module) is None
+    except ModuleNotFoundError:
+        return True
+
+
+def _require_build_dependencies():
+    missing = [
+        name
+        for name, module in (
+            ("PyInstaller", "PyInstaller"),
+            ("pypdf", "pypdf"),
+        )
+        if _module_is_missing(module)
+    ]
+    if missing:
+        joined = ", ".join(missing)
+        raise SystemExit(
+            f"Build dependencies are missing ({joined}). Run: python -m pip install -e '.[build]'"
+        )
     try:
         import PyInstaller.__main__ as pyinstaller
     except ModuleNotFoundError as exc:
@@ -138,7 +159,7 @@ def _stage_artifact(
 
 
 def build(dist_dir: Path, platform_tag: str, arch_tag: str) -> Path:
-    pyinstaller = _require_pyinstaller()
+    pyinstaller = _require_build_dependencies()
     raw_dist = _prepare_build_root()
     _run_pyinstaller(pyinstaller, raw_dist)
     return _stage_artifact(

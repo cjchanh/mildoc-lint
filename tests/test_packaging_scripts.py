@@ -92,6 +92,16 @@ def test_build_binary_replaces_artifact_without_leaving_backup(
     assert not (tmp_path / "dist" / ".mildoc-lint-linux-x64.bak").exists()
 
 
+def test_build_binary_requires_pdf_build_dependency(monkeypatch: pytest.MonkeyPatch) -> None:
+    def fake_module_is_missing(module: str) -> bool:
+        return module == "pypdf"
+
+    monkeypatch.setattr(build_binary, "_module_is_missing", fake_module_is_missing)
+
+    with pytest.raises(SystemExit, match=r"Build dependencies are missing \(pypdf\)"):
+        build_binary._require_build_dependencies()
+
+
 def test_binary_readme_names_windows_executable() -> None:
     text = _readme_text("windows", "x64")
 

@@ -65,9 +65,11 @@ cd mildoc-lint-linux-x64
 On macOS, use the matching `mildoc-lint-macos-arm64.tar.gz` or
 `mildoc-lint-macos-x64.tar.gz` artifact.
 
-On Windows, unzip the artifact, enter the unpacked directory, and run:
+On Windows, unzip the outer GitHub Actions artifact, then unpack the enclosed
+platform archive and run:
 
 ```powershell
+Expand-Archive .\mildoc-lint-windows-x64.zip -DestinationPath .
 cd .\mildoc-lint-windows-x64
 .\mildoc-lint.exe --version
 ```
