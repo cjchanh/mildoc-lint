@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate SHA-256 checksums for files under an artifact directory."""
+"""Generate SHA-256 checksums for files in an artifact directory."""
 from __future__ import annotations
 
 import argparse
@@ -20,11 +20,10 @@ def _sha256(path: Path) -> str:
 def _iter_artifact_files(root: Path) -> list[Path]:
     return sorted(
         p
-        for p in root.rglob("*")
+        for p in root.iterdir()
         if p.is_file()
         and p.name != CHECKSUM_FILE
-        and "__pycache__" not in p.parts
-        and ".DS_Store" not in p.parts
+        and p.name != ".DS_Store"
     )
 
 

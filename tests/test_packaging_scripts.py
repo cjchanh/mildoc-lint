@@ -8,6 +8,7 @@ import pytest
 from scripts import build_binary
 from scripts.build_binary import _readme_text
 from scripts.checksum_artifacts import write_checksums
+from scripts.package_release_artifacts import package_release_artifact
 
 
 def test_checksum_artifacts_is_deterministic(tmp_path: Path) -> None:
@@ -27,17 +28,21 @@ def test_checksum_artifacts_is_deterministic(tmp_path: Path) -> None:
 def test_checksum_artifacts_excludes_generated_cache_and_existing_checksum(tmp_path: Path) -> None:
     artifact = tmp_path / "artifact"
     cache = artifact / "__pycache__"
+    nested = artifact / "nested"
     artifact.mkdir()
     cache.mkdir()
+    nested.mkdir()
     (artifact / "payload.txt").write_text("payload\n", encoding="utf-8")
     (artifact / "SHA256SUMS").write_text("old\n", encoding="utf-8")
     (cache / "payload.pyc").write_bytes(b"cache")
+    (nested / "ignored.txt").write_text("ignored\n", encoding="utf-8")
 
     text = write_checksums(artifact).read_text(encoding="utf-8")
 
     assert "payload.txt" in text
     assert "SHA256SUMS" not in text
     assert "__pycache__" not in text
+    assert "ignored.txt" not in text
 
 
 def test_checksum_artifacts_rejects_empty_artifact_dir(tmp_path: Path) -> None:
@@ -126,6 +131,33 @@ def test_stage_artifact_recovers_from_stale_backup_file(
     assert out == artifact_dir
     assert (artifact_dir / "mildoc-lint").read_text(encoding="utf-8") == "new\n"
     assert not backup_path.exists()
+
+
+def test_package_release_artifact_archives_single_platform_folder(tmp_path: Path) -> None:
+    dist = tmp_path / "dist"
+    release = tmp_path / "release"
+    artifact = dist / "mildoc-lint-linux-x64"
+    artifact.mkdir(parents=True)
+    (artifact / "mildoc-lint").write_text("binary\n", encoding="utf-8")
+
+    archive = package_release_artifact(dist, release, system_name="Linux")
+
+    assert archive == release / "mildoc-lint-linux-x64.tar.gz"
+    assert archive.is_file()
+    assert sorted(p.name for p in release.iterdir()) == ["mildoc-lint-linux-x64.tar.gz"]
+
+
+def test_package_release_artifact_uses_zip_for_windows(tmp_path: Path) -> None:
+    dist = tmp_path / "dist"
+    release = tmp_path / "release"
+    artifact = dist / "mildoc-lint-windows-x64"
+    artifact.mkdir(parents=True)
+    (artifact / "mildoc-lint.exe").write_text("binary\n", encoding="utf-8")
+
+    archive = package_release_artifact(dist, release, system_name="Windows")
+
+    assert archive == release / "mildoc-lint-windows-x64.zip"
+    assert archive.is_file()
 
 
 def test_build_binary_requires_pdf_build_dependency(monkeypatch: pytest.MonkeyPatch) -> None:
