@@ -49,3 +49,21 @@ Private enterprise, model-assisted, customer-ingestion, and maintenance-assistan
 work is intentionally outside the public `mildoc-lint` roadmap. This repository
 stays focused on deterministic local linting, public-source rule metadata, stable
 JSON/SARIF output, and Archivist receipts over synthetic examples.
+
+### `cds-maintainer` (deferred indefinitely, separate product)
+
+A field troubleshooting assistant — Lance Corporal-grade, model-backed, with
+ingestion of public technical-manual references — is conceptually planned as a
+**distinct product** named `cds-maintainer`. It is not part of `mildoc-lint`
+and is not on this roadmap.
+
+`cds-maintainer` would, if ever built:
+
+- live in a separate repository
+- be model-assisted (LLM-backed) and explicitly out of scope for the
+  deterministic-only `mildoc-lint` core
+- never share `mildoc-lint`'s deterministic-rule guarantees
+
+Status: deferred indefinitely. No timeline. No design work in this repo. Listed
+here only so the boundary stays explicit and the public scope of `mildoc-lint`
+does not drift toward conversational/field-assistant features.
