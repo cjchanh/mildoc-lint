@@ -1,5 +1,3 @@
-<!-- Mirror of adjacent CLAUDE.md — kept byte-identical for OpenAI/opencode cross-tool compatibility -->
-
 # CLAUDE.md — mildoc-lint (Folder-Scoped Governance)
 
 Global rules inherited from `~/.claude/CLAUDE.md`. This file refines and extends; it never overrides. On conflict, global wins.
