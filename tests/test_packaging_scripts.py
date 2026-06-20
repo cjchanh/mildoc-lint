@@ -255,7 +255,10 @@ def test_release_workflow_pins_publication_actions_and_toolchain() -> None:
     )
 
     assert not re.search(r"actions/[a-z-]+@v\d+", workflow)
-    assert len(re.findall(r"actions/[a-z-]+@[0-9a-f]{40}", workflow)) == 6
+    assert len(re.findall(r"actions/[a-z-]+@[0-9a-f]{40}", workflow)) == 7
+    # the release-publish action (softprops/action-gh-release) must also be SHA-pinned
+    assert not re.search(r"softprops/[a-z-]+@v\d+", workflow)
+    assert len(re.findall(r"softprops/[a-z-]+@[0-9a-f]{40}", workflow)) == 1
     assert "python -m pip install -r constraints/release.txt" in workflow
     assert "python -m pip install --no-deps -e ." in workflow
     assert "python -m build --no-isolation" in workflow
