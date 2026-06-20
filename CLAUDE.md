@@ -1,6 +1,10 @@
-# CLAUDE.md — mildoc-lint (Folder-Scoped Governance)
+# mildoc-lint — Guide for AI Coding Agents
 
-Global rules inherited from `~/.claude/CLAUDE.md`. This file refines and extends; it never overrides. On conflict, global wins.
+This file orients automated coding agents and new contributors working in this
+repository. `CLAUDE.md` and `AGENTS.md` are byte-for-byte mirrors for cross-tool
+compatibility — edit both together. On any conflict, `README.md`,
+`CONTRIBUTING.md`, `SECURITY.md`, `THREAT_MODEL.md`, and
+`docs/PUBLIC_BOUNDARY.md` are authoritative.
 
 ## Folder Purpose
 
@@ -40,20 +44,18 @@ The tool has a `THREAT_MODEL.md` and `SECURITY.md`. These are documentation, not
 
 ## Voice Register
 
-- Code & comments: CDS canonical (see global Communication Contract).
-- Public docs (`README.md`, `docs/`, `INTENT.md`): Eric/Professional register with explicit denial framing — the tool says what it does NOT do as prominently as what it does.
+- Code & comments: clear and conventional; no cleverness for its own sake.
+- Public docs (`README.md`, `docs/`, `INTENT.md`): professional register with explicit denial framing — the tool says what it does NOT do as prominently as what it does.
 - `THREAT_MODEL.md`, `SECURITY.md`: formal security-documentation register.
-- No marketing register. Banned marketing words are mechanically enforceable; see archivist CLAUDE.md Honesty Rules for the canonical list.
+- No marketing register. Avoid promotional adjectives and unverifiable superlatives. Every claim about the tool must be checkable against source code and public authorities.
 
-## Tuesday-Bar Applicability
+## Verification Bar
 
-`tuesday-bar-required: true` — Defense-adjacent document assurance tool with public claims about CUI, NAMP/CSEC, and naval correspondence standards. Every claim about what the tool checks, what standards it references, and what it explicitly does NOT do must be verifiable from source code and public authorities. Self-reported health is not evidence — verify via `pytest tests/`.
+Defense-adjacent document assurance tool with public claims about CUI, NAMP/CSEC, and naval correspondence standards. Every claim about what the tool checks, what standards it references, and what it explicitly does NOT do must be verifiable from source code and public authorities. Self-reported health is not evidence — verify via `python -m pytest tests/`.
 
-## Craft-Gate Dimensions in Scope
+## Review Dimensions
 
-`craft-gate-required: true`
-
-Primary dimensions:
+Primary focus areas for code review:
 - `error_paths` — parser failures, unsupported formats, missing files, invalid profiles must surface clear diagnostics. Silent skip on malformed input is a blocking finding.
 - `edge_cases` — empty documents, binary files misidentified as text, Unicode handling in CUI banners, nested O-SMEAC detection in non-order documents, docx without text content.
 - `readability_to_a_stranger` — lint messages must be actionable by a new user who knows the domain (military admin) but not the tool internals. Finding messages cite the specific rule and authority.
@@ -69,7 +71,7 @@ Primary dimensions:
 ## Test Convention
 
 - Framework: `pytest` (configured in `pyproject.toml`, `testpaths = ["tests"]`, `pythonpath = ["src"]`).
-- Canonical command: `cd ~/Workspace/active/mildoc-lint && python3 -m pytest tests/ -q`
+- Canonical command: `python -m pytest tests/ -q` (run from the repository root).
 - Test documents live in `tests/data/` or `examples/`. Never use live user documents in tests.
 - Regression test required for any fixed false-positive or false-negative in a lint rule.
 
@@ -79,7 +81,3 @@ Primary dimensions:
 - FAIL-CLOSED: Adding a new lint rule requires (1) public authority citation in `references.py` or explicit "in-house heuristic" label, (2) test coverage with positive and negative cases, (3) SARIF output validation.
 - FAIL-CLOSED: `--fail-on` exit-code logic must be verified on every change to `reporters.py` or `cli.py`. A zero exit with ERROR findings is a shipped bug.
 - FAIL-CLOSED: Network calls introduced into the codebase are a hard architectural violation. The tool is local-first by invariant.
-
-## Skills
-
-No local Codex skills declared. Inherits global skill registry (`~/.codex/skills/user/`).
