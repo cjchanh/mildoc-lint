@@ -27,6 +27,15 @@ Add a local SQLite-backed receipt and provenance ledger. Every lint run produces
 
 **Status: shipped in v0.2.0.**
 
+### v0.2.2 — developer experience (no rule changes)
+
+- `lint` accepts multiple paths, so it runs as a pre-commit hook over the set of changed files
+- pre-commit hook (`.pre-commit-hooks.yaml`), a local-first `Dockerfile`, and copy-paste GitHub Actions / pre-commit / Docker recipes in [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md)
+- mypy added to the dev gate and CI; ruff enforced in CI
+- README badges and an audience table; a no-terminal [`docs/QUICKSTART.md`](docs/QUICKSTART.md)
+
+**Status: shipped in v0.2.2.**
+
 ## Phase 1: Rule-pack engine
 
 - signed JSON rule packs
