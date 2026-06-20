@@ -44,15 +44,15 @@ def check(doc: Document) -> list[Finding]:
             )
 
     for match in LEGACY_RE.finditer(doc.text):
-        line = doc.text[: match.start()].count("\n") + 1
+        line_no = doc.text[: match.start()].count("\n") + 1
         findings.append(
             Finding(
                 rule_id="cui.legacy_marking",
                 severity=Severity.WARN,
                 message="Legacy/supplemental control marking detected.",
-                line=line,
+                line=line_no,
                 column=1,
-                snippet=redact_sensitive(lines[line - 1] if line - 1 < len(lines) else match.group(0)),
+                snippet=redact_sensitive(lines[line_no - 1] if line_no - 1 < len(lines) else match.group(0)),
                 recommendation="Review whether current CUI marking is required; do not rely on legacy labels as the control scheme.",
                 source=source("DODI_5200_48"),
                 tags=["cui", "marking"],
