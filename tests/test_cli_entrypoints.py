@@ -57,6 +57,8 @@ def test_lint_accepts_multiple_paths(tmp_path) -> None:
     assert rc in (0, 1)
     data = json.loads(out.read_text(encoding="utf-8"))
     assert data["documents_scanned"] == 2
+    # result.path stays a single valid path, never a joined display string
+    assert "," not in (data["path"] or "")
 
 
 def test_json_report_is_stable_without_runtime_timestamp(tmp_path) -> None:

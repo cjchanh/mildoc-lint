@@ -107,8 +107,6 @@ def main(argv: list[str] | None = None) -> int:
             result = lint_path(args.paths[0], profile=args.profile, recursive=not args.no_recursive)
             for extra in args.paths[1:]:
                 result.extend(lint_path(extra, profile=args.profile, recursive=not args.no_recursive))
-            if len(args.paths) > 1:
-                result.path = ", ".join(args.paths)
             rendered = _render_result(result, args.format)
             _emit(rendered, args.out)
             return exit_code(result, Severity.parse(args.fail_on))
