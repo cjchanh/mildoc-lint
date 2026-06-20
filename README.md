@@ -1,5 +1,11 @@
 # mildoc-lint
 
+[![CI](https://github.com/cjchanh/mildoc-lint/actions/workflows/ci.yml/badge.svg)](https://github.com/cjchanh/mildoc-lint/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
+[![Lint: ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Network: zero calls](https://img.shields.io/badge/network-zero%20calls-2ea44f.svg)](THREAT_MODEL.md)
+
 **Local-first document assurance for defense-adjacent administrative, CUI, O-SMEAC, naval correspondence, and NAMP/CSEC readiness records.**
 
 `mildoc-lint` is a deterministic linter that catches structural failures in military-style documents *before* they leave the local machine.
@@ -18,6 +24,19 @@ In short: `mildoc-lint` does not generate tactical plans, does not certify compl
 - use network calls, telemetry, cloud APIs, or model calls
 
 It is not affiliated with the U.S. Department of Defense, the U.S. Navy, the U.S. Marine Corps, NAVAIR, or any U.S. Government program office. See [`INTENT.md`](INTENT.md), [`docs/PUBLIC_BOUNDARY.md`](docs/PUBLIC_BOUNDARY.md), and [`docs/CLAIMS_MAP.md`](docs/CLAIMS_MAP.md).
+
+## Who it's for
+
+| If you… | mildoc-lint gives you |
+|---|---|
+| draft or review **CUI-marked** documents | deterministic banner, portion-marking, and designation-block shape checks before the file leaves your machine |
+| write **O-SMEAC / OPORD / WARNORD / FRAGORD** orders | five-paragraph structure and execution sub-element checks |
+| handle **naval correspondence** (SECNAV M-5216.5) | label-order and subject-line surface checks |
+| maintain **NAMP / CSEC** readiness records | discrepancy and readiness record-shape checks |
+| gate a **docs repo in CI** | SARIF 2.1.0 for GitHub code scanning and `--fail-on` exit codes |
+| work **air-gapped or cleared** | zero network, zero telemetry, synthetic examples only, local provenance receipts |
+
+New to the terminal? See [`docs/QUICKSTART.md`](docs/QUICKSTART.md). Adding it to CI or pre-commit? See [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md).
 
 ## Install
 
@@ -63,6 +82,8 @@ CI gate:
 ```bash
 mildoc-lint lint ./docs --profile mildoc --format sarif --out mildoc.sarif --fail-on error
 ```
+
+Ready-to-copy GitHub Actions, pre-commit, and Docker configs are in [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md). `lint` accepts multiple paths, so it works as a pre-commit hook over changed files.
 
 ## Profiles
 
