@@ -28,8 +28,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--version", action="version", version=f"mildoc-lint {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    lint = sub.add_parser("lint", help="lint one document or a directory of documents")
-    lint.add_argument("path", help="file or directory to scan")
+    lint = sub.add_parser("lint", help="lint one or more documents or directories")
+    lint.add_argument("paths", nargs="+", metavar="path", help="one or more files or directories to scan")
     lint.add_argument(
         "--profile",
         default="default",
@@ -104,7 +104,11 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         if args.command == "lint":
-            result = lint_path(args.path, profile=args.profile, recursive=not args.no_recursive)
+            result = lint_path(args.paths[0], profile=args.profile, recursive=not args.no_recursive)
+            for extra in args.paths[1:]:
+                result.extend(lint_path(extra, profile=args.profile, recursive=not args.no_recursive))
+            if len(args.paths) > 1:
+                result.path = ", ".join(args.paths)
             rendered = _render_result(result, args.format)
             _emit(rendered, args.out)
             return exit_code(result, Severity.parse(args.fail_on))

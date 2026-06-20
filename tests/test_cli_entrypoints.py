@@ -36,6 +36,29 @@ def test_lint_examples_runs_without_crash(tmp_path) -> None:
     assert out.exists() and out.stat().st_size > 0
 
 
+def test_lint_accepts_multiple_paths(tmp_path) -> None:
+    """Multiple file paths aggregate into one result (enables the pre-commit hook)."""
+    import json
+
+    out = tmp_path / "multi.json"
+    rc = main(
+        [
+            "lint",
+            "examples/good_training_opord.md",
+            "examples/bad_cui_order.md",
+            "--profile",
+            "all",
+            "--format",
+            "json",
+            "--out",
+            str(out),
+        ]
+    )
+    assert rc in (0, 1)
+    data = json.loads(out.read_text(encoding="utf-8"))
+    assert data["documents_scanned"] == 2
+
+
 def test_json_report_is_stable_without_runtime_timestamp(tmp_path) -> None:
     out1 = tmp_path / "out1.json"
     out2 = tmp_path / "out2.json"
