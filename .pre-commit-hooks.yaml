@@ -1,0 +1,18 @@
+# Consumer-facing pre-commit hook definition.
+# Use it from another repository's .pre-commit-config.yaml:
+#
+#   repos:
+#     - repo: https://github.com/cjchanh/mildoc-lint
+#       rev: v0.2.1
+#       hooks:
+#         - id: mildoc-lint
+#
+# The hook lints changed document files locally — no network, no telemetry.
+- id: mildoc-lint
+  name: mildoc-lint
+  description: Local-first document assurance linter for CUI / O-SMEAC / naval / NAMP records.
+  entry: mildoc-lint lint
+  language: python
+  args: ["--profile", "mildoc", "--fail-on", "error"]
+  files: '\.(md|markdown|rst|txt)$'
+  pass_filenames: true
