@@ -17,3 +17,10 @@ htmlcov/
 *.sarif
 !examples/*.sarif
 !docs/**/*.sarif
+
+# Governance staging cruft — never publish to the public surface
+*.bak
+*.bak.*
+*.proposal
+*.proposal.accepted
+*.proposal.accepted.*
