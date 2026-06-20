@@ -5,8 +5,7 @@ runtime, does not emit telemetry, and does not call model APIs.
 
 ## 1. Install With pipx
 
-After PyPI publication, use `pipx` when you want an isolated command-line
-install:
+Use `pipx` when you want an isolated command-line install:
 
 ```bash
 pipx install mildoc-lint

@@ -42,7 +42,7 @@ New to the terminal? See [`docs/QUICKSTART.md`](docs/QUICKSTART.md). Adding it t
 
 For the full install matrix, see [`docs/INSTALL.md`](docs/INSTALL.md).
 
-After PyPI publication, install the CLI with `pipx`:
+Install the CLI with `pipx`:
 
 ```bash
 pipx install mildoc-lint

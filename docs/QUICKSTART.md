@@ -12,9 +12,8 @@ Go to the **[Releases page](https://github.com/cjchanh/mildoc-lint/releases/late
 |---|---|
 | Windows | `mildoc-lint-windows-x64.zip` |
 | Mac (Apple Silicon — M1/M2/M3/M4) | `mildoc-lint-macos-arm64.tar.gz` |
+| Mac (Intel) | `mildoc-lint-macos-x64.tar.gz` |
 | Linux | `mildoc-lint-linux-x64.tar.gz` |
-
-> Intel Macs do not yet have a prebuilt download. Install from source instead — see the [README](../README.md).
 
 Optionally also download `SHA256SUMS` to verify the download (recommended in cleared environments — see the last section).
 

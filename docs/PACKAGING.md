@@ -13,7 +13,7 @@ The package is configured in `pyproject.toml`:
 - compatibility alias: `cds-mildoc`
 - license: Apache-2.0
 
-Recommended install command after publication:
+Recommended install command:
 
 ```bash
 pipx install mildoc-lint
