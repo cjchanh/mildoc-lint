@@ -10,6 +10,10 @@
 
 `mildoc-lint` is a deterministic linter that catches structural failures in military-style documents *before* they leave the local machine.
 
+![mildoc-lint flagging an invalid CUI banner, a missing O-SMEAC Command and Signal paragraph, and an exposed SSN in a synthetic draft order](docs/assets/demo.png)
+
+> Run on a synthetic draft order. Regenerate the image with `python3 docs/assets/render_demo.py`.
+
 ## What it is not
 
 In short: `mildoc-lint` does not generate tactical plans, does not certify compliance, does not determine classification, and does not call the network.
