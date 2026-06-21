@@ -90,11 +90,16 @@ def load_rule_packs(extra_paths: Sequence[str | Path] | None = None) -> RulePack
     """
     if not extra_paths:
         return load_builtin_rule_packs()
+    return _load_overlayed_rule_packs(tuple(str(path) for path in extra_paths))
 
+
+@lru_cache(maxsize=32)
+def _load_overlayed_rule_packs(overlay_paths: tuple[str, ...]) -> RulePackCatalog:
+    # Cached on the overlay path set so a multi-document scan with --rule-pack
+    # parses each overlay once, not once per document.
     records = dict(load_builtin_rule_packs().records)
-    for path in extra_paths:
-        overlay_records = _load_pack_path(Path(path))
-        _merge_records(records, overlay_records, source=str(path))
+    for path in overlay_paths:
+        _merge_records(records, _load_pack_path(Path(path)), source=path)
     return _catalog(records.values())
 
 
@@ -154,11 +159,13 @@ def _catalog(records: Iterable[RulePackRecord]) -> RulePackCatalog:
     return RulePackCatalog(
         records=MappingProxyType(ordered),
         rule_pack_hash=rule_pack_hash(ordered),
-        source_set_hash=_source_set_hash(ordered.values()),
+        source_set_hash=source_set_hash(ordered.values()),
     )
 
 
-def _source_set_hash(records: Iterable[RulePackRecord]) -> str:
+def source_set_hash(records: Iterable[RulePackRecord]) -> str:
+    """Deterministic hash of the unique source set. Single source of truth —
+    the Archivist receipt layer calls this rather than re-implementing it."""
     unique = {
         json.dumps(record.source.to_dict(), sort_keys=True, separators=(",", ":")): record.source.to_dict()
         for record in records

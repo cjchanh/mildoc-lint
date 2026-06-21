@@ -13,7 +13,7 @@ from uuid import uuid4
 
 from .._version import __version__
 from ..engine import expand_profile, lint_document
-from ..packs import RulePackRecord, load_rule_packs, rule_pack_hash
+from ..packs import load_rule_packs, rule_pack_hash, source_set_hash
 from ..parsers import load_document
 from .db import default_db_path, get_db, init_db
 from .hashing import (
@@ -43,16 +43,7 @@ def _rules_signature(profile: str) -> tuple[str, str]:
     """
     enabled = expand_profile(profile)
     records = load_rule_packs().records_for_profiles(enabled)
-    return (rule_pack_hash(records), _source_set_hash(records))
-
-
-def _source_set_hash(records: list[RulePackRecord]) -> str:
-    sources_payload = {
-        json.dumps(record.source.to_dict(), sort_keys=True, separators=(",", ":")): record.source.to_dict()
-        for record in records
-    }
-    sources = [sources_payload[key] for key in sorted(sources_payload)]
-    return content_hash(json.dumps(sources, sort_keys=True, separators=(",", ":")))
+    return (rule_pack_hash(records), source_set_hash(records))
 
 
 def ingest_document(

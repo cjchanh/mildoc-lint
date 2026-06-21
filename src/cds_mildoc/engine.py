@@ -104,7 +104,11 @@ def lint_path(
 
 def _apply_pack_metadata(findings: list[Finding], catalog: RulePackCatalog) -> None:
     for finding in findings:
-        record = catalog.require(finding.rule_id)
+        record = catalog.get(finding.rule_id)
+        if record is None:
+            # No rule-pack record for this finding (e.g. a synthetic parser
+            # finding). Keep the severity/source the rule emitted; do not crash.
+            continue
         finding.severity = record.severity
         finding.source = record.source_text
         finding.testimony = record.testimony
