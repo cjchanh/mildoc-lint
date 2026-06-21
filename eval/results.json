@@ -1,0 +1,314 @@
+{
+  "schema": "mildoc-eval-result/v1",
+  "profile": "mildoc",
+  "docs_scored": 13,
+  "overall": {
+    "tp": 21,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.955,
+    "recall": 1.0
+  },
+  "per_rule": [
+    {
+      "rule": "cui.invalid_banner",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "cui.legacy_marking",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "cui.missing_bottom_banner",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "cui.missing_designation_indicator",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "cui.missing_top_banner",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "cui.possible_unmarked_category",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "namp.missing_corrective_action",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "namp.missing_due_date",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "namp.missing_evidence",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "naval.label_order",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "naval.missing_subj",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "osmeac.execution_missing_common_subelements",
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "osmeac.fragord_missing_base_order",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "osmeac.fragord_no_change_absent",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "osmeac.missing_admin_logistics",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "osmeac.missing_command_signal",
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "osmeac.missing_mission",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "osmeac.mission_incomplete_heuristic",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "rule": "pii.ssn",
+      "tp": 1,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.5,
+      "recall": 1.0
+    }
+  ],
+  "per_doc": [
+    {
+      "doc": "good_cui_opord.md",
+      "category": "good",
+      "tp": [],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": [
+        "cui.portion_marking_recommended",
+        "osmeac.orientation_absent"
+      ]
+    },
+    {
+      "doc": "good_naval_letter.md",
+      "category": "good",
+      "tp": [],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": []
+    },
+    {
+      "doc": "good_namp_record.md",
+      "category": "good",
+      "tp": [],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": [
+        "namp.record_shape_ok"
+      ]
+    },
+    {
+      "doc": "good_warnord.md",
+      "category": "good",
+      "tp": [],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": [
+        "osmeac.orientation_absent"
+      ]
+    },
+    {
+      "doc": "plain_memo.md",
+      "category": "good",
+      "tp": [],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": []
+    },
+    {
+      "doc": "bad_cui_banner.md",
+      "category": "bad",
+      "tp": [
+        "cui.invalid_banner",
+        "cui.missing_bottom_banner",
+        "cui.missing_designation_indicator",
+        "cui.missing_top_banner",
+        "pii.ssn"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": [
+        "cui.portion_marking_recommended"
+      ]
+    },
+    {
+      "doc": "bad_naval_order.md",
+      "category": "bad",
+      "tp": [
+        "naval.label_order",
+        "naval.missing_subj"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": []
+    },
+    {
+      "doc": "bad_namp_missing.md",
+      "category": "bad",
+      "tp": [
+        "namp.missing_corrective_action",
+        "namp.missing_due_date",
+        "namp.missing_evidence"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": []
+    },
+    {
+      "doc": "bad_opord_missing_cs.md",
+      "category": "bad",
+      "tp": [
+        "osmeac.execution_missing_common_subelements",
+        "osmeac.missing_command_signal",
+        "osmeac.mission_incomplete_heuristic"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": [
+        "osmeac.orientation_absent"
+      ]
+    },
+    {
+      "doc": "bad_fragord.md",
+      "category": "bad",
+      "tp": [
+        "osmeac.execution_missing_common_subelements",
+        "osmeac.fragord_missing_base_order",
+        "osmeac.fragord_no_change_absent",
+        "osmeac.missing_admin_logistics",
+        "osmeac.missing_command_signal",
+        "osmeac.missing_mission"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": [
+        "osmeac.orientation_absent"
+      ]
+    },
+    {
+      "doc": "legacy_marking_doc.md",
+      "category": "bad",
+      "tp": [
+        "cui.legacy_marking",
+        "cui.possible_unmarked_category"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": []
+    },
+    {
+      "doc": "empty.md",
+      "category": "edge",
+      "tp": [],
+      "false_positives": [],
+      "false_negatives": [],
+      "info_advisories": []
+    },
+    {
+      "doc": "ssn_lookalike.md",
+      "category": "edge",
+      "tp": [],
+      "false_positives": [
+        "pii.ssn"
+      ],
+      "false_negatives": [],
+      "info_advisories": []
+    }
+  ]
+}

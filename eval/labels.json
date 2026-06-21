@@ -1,0 +1,22 @@
+{
+  "_schema": "mildoc-eval/v1",
+  "_doc": "Ground-truth labels for the precision/recall harness. 'expect' lists the ERROR/WARN rule_ids a domain reviewer judges SHOULD fire on each doc. INFO findings are advisory and are not scored as FP/FN (reported separately). Labels are independent of the code's design: where the tool fires an ERROR/WARN not in 'expect', that is a candidate false positive; where an expected rule does not fire, that is a candidate false negative. Profile used: mildoc.",
+  "profile": "mildoc",
+  "docs": {
+    "good_cui_opord.md":   {"category": "good", "expect": [], "note": "Well-formed CUI OPORD: CUI banners top+bottom, full DI block, all 5 O-SMEAC sections, complete mission/execution. Advisory INFO ok (portion_marking_recommended, orientation_absent)."},
+    "good_naval_letter.md":{"category": "good", "expect": [], "note": "From/To/Subj in order; Subj uppercase, no terminal punctuation."},
+    "good_namp_record.md": {"category": "good", "expect": [], "note": "Complete NAMP/CSEC record with parseable date. Advisory INFO ok (record_shape_ok)."},
+    "good_warnord.md":     {"category": "good", "expect": [], "note": "WARNORD with mission+execution+timeline. Advisory INFO ok (orientation_absent)."},
+    "plain_memo.md":       {"category": "good", "expect": [], "note": "Non-military prose. Noise test: nothing should fire at all."},
+
+    "bad_cui_banner.md":   {"category": "bad", "expect": ["cui.invalid_banner", "cui.missing_top_banner", "cui.missing_bottom_banner", "cui.missing_designation_indicator", "pii.ssn"], "note": "Invalid CUI//CTI banner, no DI block, exposed SSN, in CUI context."},
+    "bad_naval_order.md":  {"category": "bad", "expect": ["naval.missing_subj", "naval.label_order"], "note": "Missing Subj; From/To reversed."},
+    "bad_namp_missing.md": {"category": "bad", "expect": ["namp.missing_corrective_action", "namp.missing_due_date", "namp.missing_evidence"], "note": "NAMP record missing corrective action, due date, evidence."},
+    "bad_opord_missing_cs.md": {"category": "bad", "expect": ["osmeac.missing_command_signal", "osmeac.mission_incomplete_heuristic", "osmeac.execution_missing_common_subelements"], "note": "OPORD missing Command and Signal; weak mission and execution."},
+    "bad_fragord.md":      {"category": "bad", "expect": ["osmeac.missing_mission", "osmeac.missing_admin_logistics", "osmeac.missing_command_signal", "osmeac.fragord_missing_base_order", "osmeac.fragord_no_change_absent", "osmeac.execution_missing_common_subelements"], "note": "FRAGORD with no base-order reference and omitted sections."},
+    "legacy_marking_doc.md": {"category": "bad", "expect": ["cui.legacy_marking", "cui.possible_unmarked_category"], "note": "FOUO legacy marking + ITAR language without CUI marking."},
+
+    "empty.md":            {"category": "edge", "expect": [], "note": "Empty document: must not crash, must not fire."},
+    "ssn_lookalike.md":    {"category": "edge", "expect": [], "note": "SSN-shaped stock number in a supply doc. Domain-clean. Probes pii.ssn precision (high-recall regex is expected to over-fire here)."}
+  }
+}

@@ -94,10 +94,14 @@ def _find_sections(lines: list[str]) -> dict[str, int]:
 def _section_text(doc: Document, sections: dict[str, int], section: str) -> str:
     if section not in sections:
         return ""
-    start = sections[section]
+    start = sections[section]  # 1-indexed line of the section header
     later = [line for key, line in sections.items() if key != section and line > start]
     end = min(later) if later else len(doc.lines) + 1
-    return "\n".join(doc.lines[start:end - 1]).strip()
+    # Include the header line itself: the mission/execution content is commonly
+    # written on the same line as the label ("2. Mission. <statement>"). Slicing
+    # from `start` (1-indexed) into a 0-indexed list dropped that line, which made
+    # the mission/execution heuristics read empty text and fire false positives.
+    return "\n".join(doc.lines[start - 1:end - 1]).strip()
 
 
 def _check_mission(doc: Document, sections: dict[str, int]) -> list[Finding]:
