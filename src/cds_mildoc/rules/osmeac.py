@@ -9,16 +9,21 @@ from .util import redact_sensitive
 
 ORDER_HINT_RE = re.compile(r"\b(?:OPORD|OPLAN|WARNORD|WARNO|FRAGORD|FRAGO|O-?SMEAC|SMEAC|operation order|combat order)\b", re.IGNORECASE)
 
+# Optional leading enumerator: a number ("1."), a letter ("a."), or a bullet
+# ("-", "*", "•"). Documents are commonly reformatted with bullets instead of
+# numbers; section detection must survive that.
+_ENUM = r"(?:[-*•]\s+|\d{1,2}\.?\s*|[a-z]\.\s*)?"
+
 SECTION_PATTERNS: dict[str, re.Pattern[str]] = {
-    "orientation": re.compile(r"^\s*(?:orientation(?:\s+brief)?|0\.\s*orientation)\b", re.IGNORECASE),
-    "situation": re.compile(r"^\s*(?:1\.?\s*)?(?:situation)\b", re.IGNORECASE),
-    "mission": re.compile(r"^\s*(?:2\.?\s*)?(?:mission)\b", re.IGNORECASE),
-    "execution": re.compile(r"^\s*(?:3\.?\s*)?(?:execution)\b", re.IGNORECASE),
+    "orientation": re.compile(rf"^\s*{_ENUM}(?:orientation(?:\s+brief)?)\b", re.IGNORECASE),
+    "situation": re.compile(rf"^\s*{_ENUM}(?:situation)\b", re.IGNORECASE),
+    "mission": re.compile(rf"^\s*{_ENUM}(?:mission)\b", re.IGNORECASE),
+    "execution": re.compile(rf"^\s*{_ENUM}(?:execution)\b", re.IGNORECASE),
     "admin_logistics": re.compile(
-        r"^\s*(?:4\.?\s*)?(?:admin(?:istration)?\s*(?:and|&)\s*logistics|administration\s+and\s+logistics|service\s+and\s+support|sustainment)\b",
+        rf"^\s*{_ENUM}(?:admin(?:istration)?\s*(?:and|&)\s*logistics|administration\s+and\s+logistics|service\s+and\s+support|sustainment)\b",
         re.IGNORECASE,
     ),
-    "command_signal": re.compile(r"^\s*(?:5\.?\s*)?(?:command\s*(?:and|&)\s*signals?)\b", re.IGNORECASE),
+    "command_signal": re.compile(rf"^\s*{_ENUM}(?:command\s*(?:and|&)\s*signals?)\b", re.IGNORECASE),
 }
 
 SECTION_DISPLAY = {
@@ -112,11 +117,14 @@ def _check_mission(doc: Document, sections: dict[str, int]) -> list[Finding]:
         return []
     line = sections.get("mission", 1)
     findings: list[Finding] = []
+    # Search as flowing text: word-wrap can split a multi-word cue ("in order\nto")
+    # across a line break, which would otherwise defeat the phrase patterns.
+    flat = re.sub(r"\s+", " ", text)
     checks = [
-        (MISSION_TASK_RE.search(text), "task/action verb"),
-        (MISSION_WHEN_RE.search(text), "when/timing cue"),
-        (MISSION_WHERE_RE.search(text), "where/location cue"),
-        (MISSION_PURPOSE_RE.search(text), "why/purpose cue"),
+        (MISSION_TASK_RE.search(flat), "task/action verb"),
+        (MISSION_WHEN_RE.search(flat), "when/timing cue"),
+        (MISSION_WHERE_RE.search(flat), "where/location cue"),
+        (MISSION_PURPOSE_RE.search(flat), "why/purpose cue"),
     ]
     missing = [name for ok, name in checks if not ok]
     if missing:
@@ -150,7 +158,7 @@ def _check_mission(doc: Document, sections: dict[str, int]) -> list[Finding]:
 def _check_execution(doc: Document, sections: dict[str, int]) -> list[Finding]:
     text = _section_text(doc, sections, "execution")
     line = sections.get("execution", 1)
-    lowered = text.lower()
+    lowered = re.sub(r"\s+", " ", text).lower()
     expected = [
         ("commander", "commander's intent"),
         ("concept", "concept of operations"),

@@ -75,30 +75,42 @@ Precision over the 30-document corpus is 0.973.
 
 The hand-labeled corpus is small. To test the rules at volume, `eval/generate.py`
 runs a *metamorphic* stress test: it starts from a verified-clean base document,
-injects exactly one known defect, then reformats the result many ways — extra
-blank lines, indentation, CRLF line endings, tabs, trailing whitespace, and
-seeded random whitespace. Two properties are checked on every generated document:
+injects exactly one known defect, then reformats the result eight ways — extra
+blank lines, indentation, CRLF line endings, tabs, trailing whitespace, seeded
+random whitespace, **hard word-wrap** (as a word processor would), and
+**bullet-style numbering** (replacing `1.`/`a.` with dashes). Three properties
+are checked:
 
 - **injection recall** — the injected defect is detected.
 - **no-noise** — nothing fires except the injected defect (the base was clean).
-
-Reformatting the same defect many ways is a direct test of the line/regex
-parsing: a variant that drops a finding is a robustness failure.
+- **clean-preservation** — reformatting a clean document (no defect) keeps it
+  clean. This is the hardest formatting-robustness test.
 
 ```text
 python3 eval/generate.py --count 5000
   injection recall (defect always detected): 1.0000
   no-noise rate (no finding beyond the defect): 1.0000
+  clean-preservation (reflow a clean doc, stays clean): 1.0000  (80 checks)
   No robustness failures: every injected defect fired under every format variant.
 ```
 
-Across 5,000 generated documents, every injected defect was detected under every
-formatting variant, with no finding beyond the injected defect. A smaller batch
-runs in CI (`tests/test_eval_precision.py`). Building the generator also surfaced
-its own labeling subtleties — for example, removing a CUI banner from a very
-short document does not produce a "missing banner" finding because the top and
-bottom line windows overlap, which is correct behavior — and those were corrected
-in the generator rather than the rules.
+These numbers were *not* the first result. The word-wrap and bullet variants
+were added precisely because whitespace-only variants barely exercise the
+parsing, and they immediately found two real brittleness bugs, both since fixed:
+
+- **bullet numbering broke O-SMEAC section detection** — reformatting `1. Mission`
+  as `- Mission` made the section regex miss every section, so a well-formed order
+  reported all five sections missing. Section detection now tolerates dash and
+  bullet enumerators.
+- **word-wrap split multi-word cues** — wrapping `... in order\nto secure ...`
+  defeated the mission "purpose" phrase match. The mission and execution
+  heuristics now read the section as flowing text (collapsing line breaks).
+
+A 300-document batch runs in CI (`tests/test_eval_precision.py`). Building the
+generator also surfaced labeling subtleties on its side — for example, removing a
+CUI banner from a very short document is correctly *not* a "missing banner"
+finding because the top and bottom line windows overlap — and those were
+corrected in the generator, not the rules.
 
 ## Honest scope
 

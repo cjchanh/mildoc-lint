@@ -45,3 +45,6 @@ def test_metamorphic_robustness_under_reformatting() -> None:
     res = generate(count=300, seed=1)
     assert res["injection_recall"] == 1.0, res["robustness_failures"]
     assert res["no_noise_rate"] == 1.0, res["noise_examples"]
+    # Reformatting a clean document (including hard word-wrap and bullet numbering)
+    # must not introduce findings.
+    assert res["clean_preservation_rate"] == 1.0, res["clean_failures"]

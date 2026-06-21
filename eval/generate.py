@@ -124,6 +124,30 @@ def _v_tabs(t: str) -> str:
     return "\n".join("\t" + ln if ln.strip() else ln for ln in t.split("\n"))
 
 
+def _v_wrap(t: str) -> str:
+    """Hard word-wrap long lines (~40 cols), as a word processor would."""
+    out: list[str] = []
+    for ln in t.split("\n"):
+        if len(ln) <= 44 or not ln.strip():
+            out.append(ln)
+            continue
+        cur = ""
+        for w in ln.split(" "):
+            if cur and len(cur) + len(w) + 1 > 40:
+                out.append(cur)
+                cur = w
+            else:
+                cur = f"{cur} {w}".strip()
+        if cur:
+            out.append(cur)
+    return "\n".join(out)
+
+
+def _v_bullets(t: str) -> str:
+    """Replace '1.' / 'a.' enumerators with dash bullets (a common reformatting)."""
+    return "\n".join(re.sub(r"^(\s*)(?:\d{1,2}\.|[a-z]\.)\s+", r"\1- ", ln) for ln in t.split("\n"))
+
+
 VARIANTS = [
     ("identity", _v_identity),
     ("blank_lines", _v_blank_lines),
@@ -131,6 +155,8 @@ VARIANTS = [
     ("indent", _v_indent),
     ("crlf", _v_crlf),
     ("tabs", _v_tabs),
+    ("wrap", _v_wrap),
+    ("bullets", _v_bullets),
 ]
 
 
@@ -155,6 +181,17 @@ def generate(count: int, seed: int) -> dict:
     rng = random.Random(seed)
     base_text = {b: (CORPUS / f"{b}.md").read_text(encoding="utf-8").strip() for b in
                  set(CUI_BASES + ORDER_BASES + NAVAL_BASES + NAMP_BASES)}
+
+    # Clean-preservation: reformatting a clean document must not introduce findings.
+    # This is the hardest formatting-robustness test — no defect, just reflow.
+    clean_failures: list[dict] = []
+    clean_checked = 0
+    for cb, ctext in sorted(base_text.items()):
+        for cvname, cvf in VARIANTS:
+            fired = _fired(cvf(ctext))
+            clean_checked += 1
+            if fired:
+                clean_failures.append({"base": cb, "variant": cvname, "fired": sorted(fired)})
 
     cases: list[tuple[str, str, frozenset, str]] = []  # (mutation, base, expected, variant)
     for mname, bases, _fn, expected in MUTATIONS:
@@ -209,6 +246,9 @@ def generate(count: int, seed: int) -> dict:
         "no_noise_rate": round(noise_pass / total, 4) if total else 1.0,
         "robustness_failures": dict(sorted(robustness_failures.items(), key=lambda kv: -kv[1])),
         "noise_examples": noise_examples,
+        "clean_preservation_rate": round(1 - len(clean_failures) / clean_checked, 4) if clean_checked else 1.0,
+        "clean_failures": clean_failures[:30],
+        "clean_checked": clean_checked,
         "mutations": len(MUTATIONS),
         "format_variants": len(VARIANTS),
     }
@@ -231,7 +271,13 @@ def main() -> int:
     print(f"mildoc-lint metamorphic stress test — {res['generated']} generated documents")
     print(f"  ({res['mutations']} defect types x {res['format_variants']} format variants + random perturbations)\n")
     print(f"  injection recall (defect always detected): {res['injection_recall']:.4f}")
-    print(f"  no-noise rate (no finding beyond the defect): {res['no_noise_rate']:.4f}\n")
+    print(f"  no-noise rate (no finding beyond the defect): {res['no_noise_rate']:.4f}")
+    print(f"  clean-preservation (reflow a clean doc, stays clean): {res['clean_preservation_rate']:.4f}  ({res['clean_checked']} checks)\n")
+    if res["clean_failures"]:
+        print("CLEAN-PRESERVATION FAILURES (reformatting a clean doc introduced findings):")
+        for f in res["clean_failures"]:
+            print(f"  {f['base']} [{f['variant']}] -> {', '.join(f['fired'])}")
+        print()
     if res["robustness_failures"]:
         print("ROBUSTNESS FAILURES (defect dropped under reformatting):")
         for k, n in res["robustness_failures"].items():

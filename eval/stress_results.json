@@ -5,6 +5,9 @@
   "no_noise_rate": 1.0,
   "robustness_failures": {},
   "noise_examples": [],
+  "clean_preservation_rate": 1.0,
+  "clean_failures": [],
+  "clean_checked": 80,
   "mutations": 14,
-  "format_variants": 6
+  "format_variants": 8
 }
