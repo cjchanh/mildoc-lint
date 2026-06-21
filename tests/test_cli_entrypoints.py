@@ -68,3 +68,47 @@ def test_json_report_is_stable_without_runtime_timestamp(tmp_path) -> None:
     assert main([*args, "--out", str(out1)]) in (0, 1)
     assert main([*args, "--out", str(out2)]) in (0, 1)
     assert out1.read_text(encoding="utf-8") == out2.read_text(encoding="utf-8")
+
+
+def test_lint_accepts_rule_pack_overlay(tmp_path) -> None:
+    import json
+
+    doc = tmp_path / "pii.md"
+    overlay = tmp_path / "unit.yaml"
+    out = tmp_path / "out.json"
+    doc.write_text("Marine: Synthetic Example SSN 123-45-6789\n", encoding="utf-8")
+    overlay.write_text(
+        """- rule_id: pii.ssn
+  severity: warn
+  profile: pii
+  source:
+    title: "Unit Privacy Review SOP"
+    url: "https://example.invalid/unit-privacy-review"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "Unit overlay changes only local severity for exposed SSN review."
+  fail_closed: true
+""",
+        encoding="utf-8",
+    )
+
+    rc = main(
+        [
+            "lint",
+            str(doc),
+            "--profile",
+            "pii",
+            "--rule-pack",
+            str(overlay),
+            "--fail-on",
+            "error",
+            "--format",
+            "json",
+            "--out",
+            str(out),
+        ]
+    )
+
+    assert rc == 0
+    data = json.loads(out.read_text(encoding="utf-8"))
+    assert data["findings"][0]["rule_id"] == "pii.ssn"
+    assert data["findings"][0]["severity"] == "warn"

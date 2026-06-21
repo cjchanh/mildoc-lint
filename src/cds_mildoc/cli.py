@@ -39,6 +39,12 @@ def build_parser() -> argparse.ArgumentParser:
     lint.add_argument("--format", choices=["text", "json", "sarif"], default="text", help="output format")
     lint.add_argument("--out", help="write output to file")
     lint.add_argument("--fail-on", default="error", help="exit nonzero on severity: info, warn, error, blocker")
+    lint.add_argument(
+        "--rule-pack",
+        action="append",
+        default=None,
+        help="load an additional rule-pack YAML overlay; may be repeated",
+    )
 
     new = sub.add_parser("new", help="print a document skeleton")
     new.add_argument("template", choices=sorted(TEMPLATES), help="template name")
@@ -51,6 +57,12 @@ def build_parser() -> argparse.ArgumentParser:
     namp_check.add_argument("--format", choices=["text", "json", "sarif"], default="text")
     namp_check.add_argument("--out")
     namp_check.add_argument("--fail-on", default="warn")
+    namp_check.add_argument(
+        "--rule-pack",
+        action="append",
+        default=None,
+        help="load an additional rule-pack YAML overlay; may be repeated",
+    )
 
     rules = sub.add_parser("rules", help="print built-in public rule authorities")
     rules.add_argument("--format", choices=["text", "json"], default="text")
@@ -104,9 +116,21 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         if args.command == "lint":
-            result = lint_path(args.paths[0], profile=args.profile, recursive=not args.no_recursive)
+            result = lint_path(
+                args.paths[0],
+                profile=args.profile,
+                recursive=not args.no_recursive,
+                rule_packs=args.rule_pack,
+            )
             for extra in args.paths[1:]:
-                result.extend(lint_path(extra, profile=args.profile, recursive=not args.no_recursive))
+                result.extend(
+                    lint_path(
+                        extra,
+                        profile=args.profile,
+                        recursive=not args.no_recursive,
+                        rule_packs=args.rule_pack,
+                    )
+                )
             rendered = _render_result(result, args.format)
             _emit(rendered, args.out)
             return exit_code(result, Severity.parse(args.fail_on))
@@ -117,7 +141,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         if args.command == "namp" and args.namp_command == "check":
-            result = lint_path(args.path, profile="namp", recursive=True)
+            result = lint_path(args.path, profile="namp", recursive=True, rule_packs=args.rule_pack)
             rendered = _render_result(result, args.format)
             _emit(rendered, args.out)
             return exit_code(result, Severity.parse(args.fail_on))

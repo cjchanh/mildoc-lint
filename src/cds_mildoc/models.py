@@ -38,6 +38,7 @@ class Finding:
     snippet: str | None = None
     recommendation: str | None = None
     source: str | None = None
+    testimony: str | None = None
     tags: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:

@@ -1,0 +1,63 @@
+- rule_id: naval.label_order
+  severity: warn
+  profile: naval
+  source:
+    title: "SECNAV M-5216.5 Department of the Navy Correspondence Manual"
+    url: "https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "SECNAV M-5216.5 is the public Navy correspondence reference used for common line-label ordering checks."
+  fail_closed: true
+- rule_id: naval.missing_from
+  severity: error
+  profile: naval
+  source:
+    title: "SECNAV M-5216.5 Department of the Navy Correspondence Manual"
+    url: "https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "SECNAV M-5216.5 is the public Navy correspondence reference used for From line-label checks."
+  fail_closed: true
+- rule_id: naval.missing_subj
+  severity: error
+  profile: naval
+  source:
+    title: "SECNAV M-5216.5 Department of the Navy Correspondence Manual"
+    url: "https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "SECNAV M-5216.5 is the public Navy correspondence reference used for Subj line-label checks."
+  fail_closed: true
+- rule_id: naval.missing_to
+  severity: error
+  profile: naval
+  source:
+    title: "SECNAV M-5216.5 Department of the Navy Correspondence Manual"
+    url: "https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "SECNAV M-5216.5 is the public Navy correspondence reference used for To line-label checks."
+  fail_closed: true
+- rule_id: naval.subject_label_not_subj
+  severity: warn
+  profile: naval
+  source:
+    title: "SECNAV M-5216.5 Department of the Navy Correspondence Manual"
+    url: "https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "SECNAV M-5216.5 is the public Navy correspondence reference used for Subj label form checks."
+  fail_closed: true
+- rule_id: naval.subject_not_uppercase
+  severity: warn
+  profile: naval
+  source:
+    title: "SECNAV M-5216.5 Department of the Navy Correspondence Manual"
+    url: "https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "SECNAV M-5216.5 is the public Navy correspondence reference used for common subject-line style checks."
+  fail_closed: true
+- rule_id: naval.subject_punctuation
+  severity: warn
+  profile: naval
+  source:
+    title: "SECNAV M-5216.5 Department of the Navy Correspondence Manual"
+    url: "https://www.marines.mil/portals/1/publications/secnav%20m%205216.5.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "SECNAV M-5216.5 is the public Navy correspondence reference used for common subject-line punctuation checks."
+  fail_closed: true

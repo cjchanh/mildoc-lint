@@ -1,3 +1,4 @@
 include constraints/release.txt
 include scripts/*.py
+recursive-include src/cds_mildoc/rule_packs *.yaml
 recursive-include packaging/pyinstaller *.py *.spec

@@ -1,0 +1,117 @@
+- rule_id: osmeac.execution_missing_common_subelements
+  severity: warn
+  profile: osmeac
+  source:
+    title: "USMC FGHT 1004 Introduction to the Operations Order"
+    url: "https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC operations-order instruction supports checking common Execution subelements for order clarity."
+  fail_closed: true
+- rule_id: osmeac.fragord_missing_base_order
+  severity: error
+  profile: osmeac
+  source:
+    title: "USMC Combat Orders Foundations, Basic Officer Course"
+    url: "https://www.trngcmd.marines.mil/Portals/207/Docs/TBS/B2B2377%20Combat%20Orders%20Foundations.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC combat-orders instruction defines fragmentary orders as changes to a base order."
+  fail_closed: true
+- rule_id: osmeac.fragord_no_change_absent
+  severity: warn
+  profile: osmeac
+  source:
+    title: "USMC Combat Orders Foundations, Basic Officer Course"
+    url: "https://www.trngcmd.marines.mil/Portals/207/Docs/TBS/B2B2377%20Combat%20Orders%20Foundations.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC combat-orders instruction supports explicitly identifying unchanged sections in fragmentary orders."
+  fail_closed: true
+- rule_id: osmeac.mission_incomplete_heuristic
+  severity: warn
+  profile: osmeac
+  source:
+    title: "USMC FGHT 1004 Introduction to the Operations Order"
+    url: "https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC operations-order instruction supports checking mission statements for action, timing, location, and purpose cues."
+  fail_closed: true
+- rule_id: osmeac.mission_too_long
+  severity: warn
+  profile: osmeac
+  source:
+    title: "USMC FGHT 1004 Introduction to the Operations Order"
+    url: "https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC operations-order instruction supports keeping the mission statement concise and moving detail to other sections."
+  fail_closed: true
+- rule_id: osmeac.missing_admin_logistics
+  severity: error
+  profile: osmeac
+  source:
+    title: "USMC FGHT 1004 Introduction to the Operations Order"
+    url: "https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC O-SMEAC instruction includes Administration and Logistics as a required order section."
+  fail_closed: true
+- rule_id: osmeac.missing_command_signal
+  severity: error
+  profile: osmeac
+  source:
+    title: "USMC FGHT 1004 Introduction to the Operations Order"
+    url: "https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC O-SMEAC instruction includes Command and Signal as a required order section."
+  fail_closed: true
+- rule_id: osmeac.missing_execution
+  severity: error
+  profile: osmeac
+  source:
+    title: "USMC FGHT 1004 Introduction to the Operations Order"
+    url: "https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC O-SMEAC instruction includes Execution as a required order section."
+  fail_closed: true
+- rule_id: osmeac.missing_mission
+  severity: error
+  profile: osmeac
+  source:
+    title: "USMC FGHT 1004 Introduction to the Operations Order"
+    url: "https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC O-SMEAC instruction includes Mission as a required order section."
+  fail_closed: true
+- rule_id: osmeac.missing_situation
+  severity: error
+  profile: osmeac
+  source:
+    title: "USMC FGHT 1004 Introduction to the Operations Order"
+    url: "https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC O-SMEAC instruction includes Situation as a required order section."
+  fail_closed: true
+- rule_id: osmeac.orientation_absent
+  severity: info
+  profile: osmeac
+  source:
+    title: "USMC FGHT 1004 Introduction to the Operations Order"
+    url: "https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC O-SMEAC instruction identifies Orientation as a preliminary element when required by the order context."
+  fail_closed: true
+- rule_id: osmeac.warnord_prep_time_missing
+  severity: info
+  profile: osmeac
+  source:
+    title: "USMC Combat Orders Foundations, Basic Officer Course"
+    url: "https://www.trngcmd.marines.mil/Portals/207/Docs/TBS/B2B2377%20Combat%20Orders%20Foundations.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC combat-orders instruction emphasizes issuing warning orders early enough to support subordinate preparation."
+  fail_closed: true
+- rule_id: osmeac.warnord_too_sparse
+  severity: warn
+  profile: osmeac
+  source:
+    title: "USMC Combat Orders Foundations, Basic Officer Course"
+    url: "https://www.trngcmd.marines.mil/Portals/207/Docs/TBS/B2B2377%20Combat%20Orders%20Foundations.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "USMC combat-orders instruction supports including the known mission or execution information in warning orders."
+  fail_closed: true

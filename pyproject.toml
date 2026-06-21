@@ -45,6 +45,9 @@ where = ["src"]
 [tool.setuptools.dynamic]
 version = { attr = "cds_mildoc._version.__version__" }
 
+[tool.setuptools.package-data]
+cds_mildoc = ["rule_packs/*.yaml"]
+
 [tool.ruff]
 line-length = 100
 target-version = "py310"
