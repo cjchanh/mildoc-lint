@@ -24,14 +24,15 @@ overall recall    = TP / (TP + FN)      # how much of what's wanted it flags
 
 ## Current results
 
-Profile `mildoc`, 13 synthetic documents (5 well-formed, 6 with seeded defects,
-2 edge cases):
+Profile `mildoc`, 30 synthetic documents across the five rule families:
+well-formed examples, seeded-defect examples, and precision probes (documents
+that mention a domain term but should not be flagged):
 
 | metric | value |
 |---|---|
-| precision | 0.955 |
+| precision | 0.973 |
 | recall | 1.000 |
-| true positives | 21 |
+| true positives | 36 |
 | false positives | 1 |
 | false negatives | 0 |
 
@@ -52,7 +53,23 @@ mission or execution content on the same line as the section label
 (`2. Mission. <statement>` — a common format), the section text was read as
 empty, so the mission and execution heuristics fired even on well-formed orders.
 The off-by-one in `osmeac._section_text` was fixed and pinned with a regression
-test; precision over this corpus moved from 0.840 to 0.955.
+test; precision over the first corpus moved from 0.840 to 0.955.
+
+Expanding the corpus to 30 documents with precision probes per family surfaced
+three more over-firing gates, each since tightened:
+
+- `cui` context was established by the descriptive phrase "controlled
+  unclassified information" in flowing prose, so a training bulletin *about* CUI
+  drew "missing banner" errors. Context is now taken from CUI markings (a
+  standalone or malformed CUI banner), not from prose.
+- `namp` treated any two generic maintenance words (for example "maintenance"
+  plus "quality assurance") as a maintenance record, so a break-room notice drew
+  missing-field errors. A record-like signal (a discrepancy, finding, audit, or
+  corrective action) is now also required.
+- the mission heuristic flagged a FRAGORD whose mission read "No change" as
+  incomplete; a deferred mission is no longer flagged.
+
+Precision over the 30-document corpus is 0.973.
 
 ## Honest scope
 

@@ -10,6 +10,12 @@ NAMP_HINT_RE = re.compile(
     r"\b(?:maintenance|QA|quality assurance|audit|discrepanc(?:y|ies)|work center|FOD|tool control|MALS)\b",
     re.IGNORECASE,
 )
+# A record-like signal distinguishes an actual maintenance/audit record from
+# ordinary prose that happens to mention maintenance and QA.
+RECORD_SIGNAL_RE = re.compile(
+    r"\b(?:discrepanc(?:y|ies)|deficienc(?:y|ies)|finding|non[- ]?compliance|corrective action|audit)\b",
+    re.IGNORECASE,
+)
 DATE_RE = re.compile(r"\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{1,2}\s+(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)\s+\d{2,4})\b", re.IGNORECASE)
 
 FIELD_PATTERNS = {
@@ -87,5 +93,7 @@ def check(doc: Document, forced: bool = False) -> list[Finding]:
 def _likely_namp(text: str) -> bool:
     if NAMP_EXPLICIT_RE.search(text):
         return True
-    # Avoid treating ordinary orders with a single "discrepancy" word as maintenance records.
-    return len(NAMP_HINT_RE.findall(text)) >= 2
+    # Two generic maintenance words ("maintenance" + "quality assurance") in
+    # ordinary prose are not a maintenance record. Require a record-like signal
+    # (a discrepancy/deficiency/finding/audit/corrective action) alongside them.
+    return len(NAMP_HINT_RE.findall(text)) >= 2 and bool(RECORD_SIGNAL_RE.search(text))

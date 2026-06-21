@@ -106,6 +106,10 @@ def _section_text(doc: Document, sections: dict[str, int], section: str) -> str:
 
 def _check_mission(doc: Document, sections: dict[str, int]) -> list[Finding]:
     text = _section_text(doc, sections, "mission")
+    # A FRAGORD that defers the mission ("Mission. No change.") is not an
+    # incomplete mission statement; do not flag it.
+    if re.search(r"\bno\s+changes?\b", text, re.IGNORECASE):
+        return []
     line = sections.get("mission", 1)
     findings: list[Finding] = []
     checks = [

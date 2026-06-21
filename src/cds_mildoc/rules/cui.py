@@ -91,13 +91,19 @@ def _has_cui_context(doc: Document) -> bool:
         "cui category",
         "cui categories",
         "limited dissemination control",
-        "controlled unclassified information",
         "//cui",
     ]
     if any(t in lower for t in triggers):
         return True
-    exact_cui_lines = sum(1 for _, line in normalized_lines(doc) if CUI_BANNER_RE.match(line))
-    return exact_cui_lines > 0
+    # A standalone "CUI" banner, or a malformed CUI banner attempt (CUI//CTI,
+    # UNCLASSIFIED//CUI, ...), marks the document as CUI even when the form is wrong.
+    # The descriptive phrase "controlled unclassified information" is intentionally
+    # NOT a trigger: it appears in prose that merely discusses the program and
+    # produced false "missing banner" findings on training material about CUI.
+    for _, line in normalized_lines(doc):
+        if CUI_BANNER_RE.match(line) or INVALID_BANNER_RE.match(line):
+            return True
+    return False
 
 
 def _check_banners(doc: Document) -> list[Finding]:

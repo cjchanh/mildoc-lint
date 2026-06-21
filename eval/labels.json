@@ -16,6 +16,25 @@
     "bad_fragord.md":      {"category": "bad", "expect": ["osmeac.missing_mission", "osmeac.missing_admin_logistics", "osmeac.missing_command_signal", "osmeac.fragord_missing_base_order", "osmeac.fragord_no_change_absent", "osmeac.execution_missing_common_subelements"], "note": "FRAGORD with no base-order reference and omitted sections."},
     "legacy_marking_doc.md": {"category": "bad", "expect": ["cui.legacy_marking", "cui.possible_unmarked_category"], "note": "FOUO legacy marking + ITAR language without CUI marking."},
 
+    "good_cui_portions.md":  {"category": "good", "expect": [], "note": "CUI info paper with consistent portion markings and a full DI block."},
+    "good_fragord.md":       {"category": "good", "expect": [], "note": "FRAGORD with base-order reference and 'No change' on each section."},
+    "good_order_orientation.md": {"category": "good", "expect": [], "note": "OPORD with an Orientation section; should not fire orientation_absent."},
+    "good_naval_full.md":    {"category": "good", "expect": [], "note": "From/To/Via/Subj/Ref/Encl in order; Subj uppercase, no terminal punctuation."},
+    "good_namp_ooma.md":     {"category": "good", "expect": [], "note": "Complete OOMA/NALCOMIS NAMP record with parseable date."},
+    "order_alias_service_support.md": {"category": "good", "expect": [], "note": "OPORD using 'Service and Support' for paragraph 4; alias must satisfy admin_logistics."},
+    "cui_in_prose.md":       {"category": "precision", "expect": [], "note": "Open bulletin ABOUT the CUI program, not a CUI document. Probes whether mentioning 'controlled unclassified information' in prose over-triggers the banner/DI checks."},
+    "maintenance_prose.md":  {"category": "precision", "expect": [], "note": "Break-room notice with two maintenance words. Probes whether namp over-triggers on ordinary prose."},
+    "casual_mission_prose.md": {"category": "precision", "expect": [], "note": "Values statement using mission/situation/execution casually with no order hint; osmeac must stay silent."},
+    "phone_numbers_doc.md":  {"category": "precision", "expect": [], "note": "Fabricated phone numbers; pii.ssn must not match phone formats."},
+    "ten_digit_not_edipi.md": {"category": "precision", "expect": [], "note": "10-digit tracking/barcode numbers with no EDIPI context; pii.edipi must not fire."},
+
+    "bad_cui_unclass_prefix.md": {"category": "bad", "expect": ["cui.invalid_banner", "cui.do_not_prefix_unclassified", "cui.missing_top_banner", "cui.missing_bottom_banner", "cui.missing_designation_indicator"], "note": "UNCLASSIFIED//CUI banner in CUI context, no DI block."},
+    "bad_pii_edipi_dob.md":  {"category": "bad", "expect": ["pii.edipi", "pii.dob"], "note": "EDIPI in context and a date-of-birth field."},
+    "bad_naval_subject_case.md": {"category": "bad", "expect": ["naval.subject_not_uppercase", "naval.subject_punctuation"], "note": "Subj line lowercase and ending in a period."},
+    "bad_warnord_sparse.md": {"category": "bad", "expect": ["osmeac.missing_mission", "osmeac.missing_execution", "osmeac.missing_admin_logistics", "osmeac.missing_command_signal", "osmeac.warnord_too_sparse"], "note": "WARNORD with only a Situation paragraph."},
+    "bad_namp_unparseable_date.md": {"category": "bad", "expect": ["namp.due_date_not_parseable"], "note": "Complete NAMP record but due date is 'sometime next week'."},
+    "itar_marked_cui.md":    {"category": "bad", "expect": [], "note": "Properly marked CUI doc that mentions ITAR; possible_unmarked_category must NOT fire because CUI marking is present (precision check)."},
+
     "empty.md":            {"category": "edge", "expect": [], "note": "Empty document: must not crash, must not fire."},
     "ssn_lookalike.md":    {"category": "edge", "expect": [], "note": "SSN-shaped stock number in a supply doc. Domain-clean. Probes pii.ssn precision (high-recall regex is expected to over-fire here)."}
   }
