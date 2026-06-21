@@ -71,6 +71,35 @@ three more over-firing gates, each since tightened:
 
 Precision over the 30-document corpus is 0.973.
 
+## Stress testing at scale
+
+The hand-labeled corpus is small. To test the rules at volume, `eval/generate.py`
+runs a *metamorphic* stress test: it starts from a verified-clean base document,
+injects exactly one known defect, then reformats the result many ways — extra
+blank lines, indentation, CRLF line endings, tabs, trailing whitespace, and
+seeded random whitespace. Two properties are checked on every generated document:
+
+- **injection recall** — the injected defect is detected.
+- **no-noise** — nothing fires except the injected defect (the base was clean).
+
+Reformatting the same defect many ways is a direct test of the line/regex
+parsing: a variant that drops a finding is a robustness failure.
+
+```text
+python3 eval/generate.py --count 5000
+  injection recall (defect always detected): 1.0000
+  no-noise rate (no finding beyond the defect): 1.0000
+  No robustness failures: every injected defect fired under every format variant.
+```
+
+Across 5,000 generated documents, every injected defect was detected under every
+formatting variant, with no finding beyond the injected defect. A smaller batch
+runs in CI (`tests/test_eval_precision.py`). Building the generator also surfaced
+its own labeling subtleties — for example, removing a CUI banner from a very
+short document does not produce a "missing banner" finding because the top and
+bottom line windows overlap, which is correct behavior — and those were corrected
+in the generator rather than the rules.
+
 ## Honest scope
 
 These numbers are over a **synthetic, labeled corpus** authored alongside the

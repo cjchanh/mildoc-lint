@@ -1,0 +1,10 @@
+{
+  "schema": "mildoc-stress/v1",
+  "generated": 5000,
+  "injection_recall": 1.0,
+  "no_noise_rate": 1.0,
+  "robustness_failures": {},
+  "noise_examples": [],
+  "mutations": 14,
+  "format_variants": 6
+}

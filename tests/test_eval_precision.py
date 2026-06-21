@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "eval"))
 
 from score import evaluate  # noqa: E402
+from generate import generate  # noqa: E402
 
 from cds_mildoc.engine import lint_path  # noqa: E402
 
@@ -36,3 +37,11 @@ def test_mission_content_on_header_line_is_not_falsely_incomplete() -> None:
     fired = {f.rule_id for f in res.findings}
     assert "osmeac.mission_incomplete_heuristic" not in fired
     assert "osmeac.execution_missing_common_subelements" not in fired
+
+
+def test_metamorphic_robustness_under_reformatting() -> None:
+    """An injected defect must be detected under every formatting variant, with no
+    finding beyond the injected defect (the bases are clean)."""
+    res = generate(count=300, seed=1)
+    assert res["injection_recall"] == 1.0, res["robustness_failures"]
+    assert res["no_noise_rate"] == 1.0, res["noise_examples"]
