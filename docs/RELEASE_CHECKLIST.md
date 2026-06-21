@@ -7,7 +7,7 @@ Run before any tag, release, or public-push action. Fail-closed: if any item fai
 - [ ] `pytest` passes
 - [ ] `ruff check .` passes
 - [ ] If `ruff` reports a pre-existing style issue that is intentional, document it separately in this checklist before release
-- [ ] `mildoc-lint --version` returns `mildoc-lint 0.2.2`
+- [ ] `mildoc-lint --version` returns `mildoc-lint 0.3.0`
 - [ ] README commands are smoke-tested (run each shell snippet in the README's Run section)
 - [ ] `mildoc-lint lint examples --profile all` runs and reports findings
 - [ ] Example SARIF is generated: `mildoc-lint lint examples --profile all --format sarif --out examples/mildoc-example.sarif` writes a valid SARIF 2.1.0 file

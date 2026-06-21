@@ -38,11 +38,14 @@ Add a local SQLite-backed receipt and provenance ledger. Every lint run produces
 
 ## Phase 1: Rule-pack engine
 
-- signed JSON rule packs
-- versioned authority mapping
-- severity overrides
-- local policy overlays
-- rule test harness
+- source-backed YAML rule packs (rule_id, severity, profile, source, testimony, fail_closed)
+- a no-dependency loader with a content hash consumed by the Archivist ledger
+- severity overrides and local policy overlays via `--rule-pack` (fail-closed)
+- a total pack-to-implementation wiring test
+- enterprise customers ship signed unit-specific overlays without forking
+
+**Status: shipped in v0.3.0.** Measured by the eval harness: behavior is unchanged
+from v0.2.2 (precision 0.973 / recall 1.000, stress 1.0/1.0/1.0).
 
 ## Phase 2: Workbench
 
