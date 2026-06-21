@@ -1,0 +1,108 @@
+- rule_id: cui.di_missing_category
+  severity: error
+  profile: cui
+  source:
+    title: "DoD CUI Designation Indicator Block marking tip"
+    url: "https://www.dodcui.mil/Home/Marking-Tips-for-CUI-Documents/CUI-Designation-Indicator-Block/"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI designation guidance requires category information in the designation indicator block."
+  fail_closed: true
+- rule_id: cui.di_missing_controlled_by
+  severity: error
+  profile: cui
+  source:
+    title: "DoD CUI Designation Indicator Block marking tip"
+    url: "https://www.dodcui.mil/Home/Marking-Tips-for-CUI-Documents/CUI-Designation-Indicator-Block/"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI designation guidance requires a Controlled by line in the designation indicator block."
+  fail_closed: true
+- rule_id: cui.di_missing_ldc_or_distribution
+  severity: error
+  profile: cui
+  source:
+    title: "DoD CUI Designation Indicator Block marking tip"
+    url: "https://www.dodcui.mil/Home/Marking-Tips-for-CUI-Documents/CUI-Designation-Indicator-Block/"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI designation guidance requires dissemination or distribution information in the designation indicator block."
+  fail_closed: true
+- rule_id: cui.di_missing_poc
+  severity: error
+  profile: cui
+  source:
+    title: "DoD CUI Designation Indicator Block marking tip"
+    url: "https://www.dodcui.mil/Home/Marking-Tips-for-CUI-Documents/CUI-Designation-Indicator-Block/"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI designation guidance requires point-of-contact information in the designation indicator block."
+  fail_closed: true
+- rule_id: cui.do_not_prefix_unclassified
+  severity: error
+  profile: cui
+  source:
+    title: "DoD CUI Markings Training Aid, 2024"
+    url: "https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI marking guidance uses standalone CUI banners rather than UNCLASSIFIED-prefixed CUI banners."
+  fail_closed: true
+- rule_id: cui.inconsistent_portion_marking
+  severity: warn
+  profile: cui
+  source:
+    title: "DoD CUI Markings Training Aid, 2024"
+    url: "https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI marking guidance recommends consistent portion marking when portion markings are used."
+  fail_closed: true
+- rule_id: cui.invalid_banner
+  severity: error
+  profile: cui
+  source:
+    title: "DoD CUI Markings Training Aid, 2024"
+    url: "https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI marking guidance uses CUI banner markings and keeps categories out of the banner line."
+  fail_closed: true
+- rule_id: cui.legacy_marking
+  severity: warn
+  profile: cui
+  source:
+    title: "DoDI 5200.48 Controlled Unclassified Information"
+    url: "https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dodi/520048p.PDF"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoDI 5200.48 is the governing DoD CUI policy reference for current CUI handling."
+  fail_closed: true
+- rule_id: cui.missing_bottom_banner
+  severity: error
+  profile: cui
+  source:
+    title: "DoD CUI Markings Training Aid, 2024"
+    url: "https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI marking guidance requires CUI markings at the bottom of pages containing CUI."
+  fail_closed: true
+- rule_id: cui.missing_designation_indicator
+  severity: error
+  profile: cui
+  source:
+    title: "DoD CUI Designation Indicator Block marking tip"
+    url: "https://www.dodcui.mil/Home/Marking-Tips-for-CUI-Documents/CUI-Designation-Indicator-Block/"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI designation guidance requires a designation indicator block on CUI documents."
+  fail_closed: true
+- rule_id: cui.missing_top_banner
+  severity: error
+  profile: cui
+  source:
+    title: "DoD CUI Markings Training Aid, 2024"
+    url: "https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI marking guidance requires CUI markings at the top of pages containing CUI."
+  fail_closed: true
+- rule_id: cui.portion_marking_recommended
+  severity: info
+  profile: cui
+  source:
+    title: "DoD CUI Markings Training Aid, 2024"
+    url: "https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoD CUI marking guidance treats portion marking as recommended for higher-assurance unclassified CUI drafts."
+  fail_closed: true

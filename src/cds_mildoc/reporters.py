@@ -81,6 +81,7 @@ def render_sarif(result: LintResult) -> str:
                     "severity": str(finding.severity),
                     "recommendation": finding.recommendation,
                     "source": finding.source,
+                    "testimony": finding.testimony,
                     "snippet": finding.snippet,
                 },
             }

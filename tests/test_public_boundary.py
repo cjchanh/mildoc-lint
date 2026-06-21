@@ -9,6 +9,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from cds_mildoc.packs import BUILTIN_PACK_FILES, load_builtin_rule_packs
+from cds_mildoc.references import AUTHORITIES
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 BANNED_PHRASES = [
@@ -94,3 +97,18 @@ def test_readme_contains_required_disclaimers() -> None:
         if phrase.lower() not in readme:
             missing.append(phrase)
     assert not missing, "README missing required disclaimer phrases:\n" + "\n".join(missing)
+
+
+def test_builtin_rule_packs_use_public_authority_sources() -> None:
+    pack_dir = REPO_ROOT / "src" / "cds_mildoc" / "rule_packs"
+    shipped_packs = {path.name for path in pack_dir.glob("*.yaml")}
+    assert shipped_packs == set(BUILTIN_PACK_FILES)
+
+    public_sources = {(ref["title"], ref["url"]) for ref in AUTHORITIES.values()}
+    offenders: list[str] = []
+    for record in load_builtin_rule_packs().records.values():
+        source_key = (record.source.title, record.source.url)
+        if source_key not in public_sources:
+            offenders.append(f"{record.rule_id}: {record.source.title} ({record.source.url})")
+
+    assert not offenders, "Rule packs cite non-public or unknown sources:\n" + "\n".join(offenders)

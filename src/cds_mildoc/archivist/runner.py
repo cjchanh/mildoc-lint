@@ -13,14 +13,13 @@ from uuid import uuid4
 
 from .._version import __version__
 from ..engine import expand_profile, lint_document
+from ..packs import load_rule_packs, rule_pack_hash, source_set_hash
 from ..parsers import load_document
-from ..references import AUTHORITIES
 from .db import default_db_path, get_db, init_db
 from .hashing import (
     content_hash,
     document_hash,
     finding_hash,
-    rule_pack_hash,
 )
 from .receipts import (
     compute_decision,
@@ -39,16 +38,12 @@ def _utc_now() -> str:
 def _rules_signature(profile: str) -> tuple[str, str]:
     """Compute rule-pack and source-set hashes for a given profile.
 
-    Bound to the static authorities table and the profile's enabled rule
-    modules. Deterministic given a fixed mildoc-lint version.
+    Bound to the declarative built-in rule packs and the profile's enabled rule
+    modules. Deterministic given a fixed pack set.
     """
     enabled = expand_profile(profile)
-    rules_payload = {"profile": profile, "enabled_modules": sorted(enabled), "tool_version": TOOL_VERSION}
-    sources_payload = {k: {"title": v["title"], "url": v["url"]} for k, v in AUTHORITIES.items()}
-    return (
-        rule_pack_hash(rules_payload, sources_payload),
-        content_hash(json.dumps(sources_payload, sort_keys=True)),
-    )
+    records = load_rule_packs().records_for_profiles(enabled)
+    return (rule_pack_hash(records), source_set_hash(records))
 
 
 def ingest_document(

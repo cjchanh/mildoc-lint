@@ -1,0 +1,90 @@
+- rule_id: namp.due_date_not_parseable
+  severity: warn
+  profile: namp
+  source:
+    title: "NAVAIR CSEC Help Guide"
+    url: "https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR CSEC guidance supports discrepancy tracking with clear completion and correction data."
+  fail_closed: true
+- rule_id: namp.missing_corrective_action
+  severity: error
+  profile: namp
+  source:
+    title: "NAVAIR CSEC Help Guide"
+    url: "https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR CSEC guidance supports capturing corrective action for discrepant checkpoints."
+  fail_closed: true
+- rule_id: namp.missing_discrepancy
+  severity: error
+  profile: namp
+  source:
+    title: "NAVAIR CSEC Help Guide"
+    url: "https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR CSEC guidance supports capturing the discrepancy or deficient checkpoint under review."
+  fail_closed: true
+- rule_id: namp.missing_due_date
+  severity: error
+  profile: namp
+  source:
+    title: "NAVAIR CSEC Help Guide"
+    url: "https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR CSEC guidance supports tracking due dates or suspense information for discrepancy correction."
+  fail_closed: true
+- rule_id: namp.missing_evidence
+  severity: warn
+  profile: namp
+  source:
+    title: "NAVAIR CSEC Help Guide"
+    url: "https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR CSEC guidance supports retaining evidence for checklist auditing and corrective-action verification."
+  fail_closed: true
+- rule_id: namp.missing_owner
+  severity: error
+  profile: namp
+  source:
+    title: "NAVAIR CSEC Help Guide"
+    url: "https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR CSEC guidance supports assigning responsibility for discrepancy correction."
+  fail_closed: true
+- rule_id: namp.missing_reference
+  severity: error
+  profile: namp
+  source:
+    title: "NAVAIR CSEC Help Guide"
+    url: "https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR CSEC guidance supports tying audit records to the checklist or reference used."
+  fail_closed: true
+- rule_id: namp.missing_status
+  severity: warn
+  profile: namp
+  source:
+    title: "NAVAIR CSEC Help Guide"
+    url: "https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR CSEC guidance supports tracking open, closed, and verified status for discrepancy correction."
+  fail_closed: true
+- rule_id: namp.record_shape_ok
+  severity: info
+  profile: namp
+  source:
+    title: "NAVAIR CSEC Help Guide"
+    url: "https://www.navair.navy.mil/sites/g/files/jejdrs536/files/2020-10/csec_help_guide.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR CSEC guidance supports checklist auditing and discrepancy tracking when baseline record fields are present."
+  fail_closed: true
+- rule_id: namp.reference_absent
+  severity: warn
+  profile: namp
+  source:
+    title: "NAVAIR Naval Aviation Maintenance Program - CSEC Files"
+    url: "https://www.navair.navy.mil/Naval-Aviation-Maintenance-Program"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NAVAIR public NAMP/CSEC materials identify CSEC as checklist and audit support for NAMP programs."
+  fail_closed: true

@@ -1,0 +1,54 @@
+- rule_id: cui.possible_unmarked_category
+  severity: warn
+  profile: pii
+  source:
+    title: "DoDI 5200.48 Controlled Unclassified Information"
+    url: "https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dodi/520048p.PDF"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "DoDI 5200.48 is the public DoD CUI policy reference used when CUI category indicators appear without visible marking."
+  fail_closed: true
+- rule_id: pii.dob
+  severity: warn
+  profile: pii
+  source:
+    title: "NIST SP 800-171 Rev. 3"
+    url: "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NIST SP 800-171 Rev. 3 is the public CUI confidentiality reference used for local review of exposed personal identifiers."
+  fail_closed: true
+- rule_id: pii.edipi
+  severity: warn
+  profile: pii
+  source:
+    title: "NIST SP 800-171 Rev. 3"
+    url: "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NIST SP 800-171 Rev. 3 is the public CUI confidentiality reference used for local review of exposed DoD identifiers."
+  fail_closed: true
+- rule_id: pii.financial
+  severity: warn
+  profile: pii
+  source:
+    title: "NIST SP 800-171 Rev. 3"
+    url: "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NIST SP 800-171 Rev. 3 is the public CUI confidentiality reference used for local review of exposed financial account fields."
+  fail_closed: true
+- rule_id: pii.passport
+  severity: warn
+  profile: pii
+  source:
+    title: "NIST SP 800-171 Rev. 3"
+    url: "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NIST SP 800-171 Rev. 3 is the public CUI confidentiality reference used for local review of exposed passport fields."
+  fail_closed: true
+- rule_id: pii.ssn
+  severity: error
+  profile: pii
+  source:
+    title: "NIST SP 800-171 Rev. 3"
+    url: "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf"
+    retrieved_at_utc: "2026-06-20T00:00:00Z"
+  testimony: "NIST SP 800-171 Rev. 3 is the public CUI confidentiality reference used for local review of exposed SSN patterns."
+  fail_closed: true

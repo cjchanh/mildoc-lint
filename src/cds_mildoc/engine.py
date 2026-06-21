@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Sequence
 
 from .models import Document, Finding, LintResult, Severity
+from .packs import RulePackCatalog, load_rule_packs
 from .parsers import ParserError, iter_paths, load_document
 from .rules import cui, namp, naval, osmeac, pii
 
@@ -32,7 +34,12 @@ def expand_profile(profile: str) -> list[str]:
     return pieces or PROFILE_ALIASES["default"]
 
 
-def lint_document(doc: Document, profile: str = "default") -> list[Finding]:
+def lint_document(
+    doc: Document,
+    profile: str = "default",
+    rule_packs: Sequence[str | Path] | None = None,
+) -> list[Finding]:
+    catalog = load_rule_packs(rule_packs)
     checks = expand_profile(profile)
     findings: list[Finding] = []
     if "pii" in checks:
@@ -49,10 +56,16 @@ def lint_document(doc: Document, profile: str = "default") -> list[Finding]:
     for finding in findings:
         if finding.path is None:
             finding.path = doc.path
+    _apply_pack_metadata(findings, catalog)
     return sorted(findings, key=_finding_sort_key)
 
 
-def lint_path(path: str | Path, profile: str = "default", recursive: bool = True) -> LintResult:
+def lint_path(
+    path: str | Path,
+    profile: str = "default",
+    recursive: bool = True,
+    rule_packs: Sequence[str | Path] | None = None,
+) -> LintResult:
     paths = iter_paths(path, recursive=recursive)
     aggregate = LintResult(path=str(path), findings=[], documents_scanned=0)
     if not paths:
@@ -82,11 +95,23 @@ def lint_path(path: str | Path, profile: str = "default", recursive: bool = True
             )
             aggregate.documents_scanned += 1
             continue
-        aggregate.findings.extend(lint_document(doc, profile=profile))
+        aggregate.findings.extend(lint_document(doc, profile=profile, rule_packs=rule_packs))
         aggregate.documents_scanned += 1
 
     aggregate.findings.sort(key=_finding_sort_key)
     return aggregate
+
+
+def _apply_pack_metadata(findings: list[Finding], catalog: RulePackCatalog) -> None:
+    for finding in findings:
+        record = catalog.get(finding.rule_id)
+        if record is None:
+            # No rule-pack record for this finding (e.g. a synthetic parser
+            # finding). Keep the severity/source the rule emitted; do not crash.
+            continue
+        finding.severity = record.severity
+        finding.source = record.source_text
+        finding.testimony = record.testimony
 
 
 def _finding_sort_key(f: Finding) -> tuple[int, str, int, str]:
