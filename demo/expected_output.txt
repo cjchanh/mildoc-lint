@@ -1,0 +1,95 @@
+mildoc-lint demo -- captured run transcript
+===========================================
+Regenerate with:  bash demo/run_demo.sh
+Deterministic, offline (zero network). Sample is synthetic; the placeholder
+SSN 123-45-6789 is redacted in all output. This file is a captured artifact.
+-----------------------------------------------------------------------------
+
+mildoc-lint demo
+linter:  repo source (/Users/cj/Workspace/active/mildoc-lint/src)
+version: mildoc-lint 0.3.0
+sample:  demo/sample_draft_opord.md  (synthetic -- training data only)
+----------------------------------------------------------------------
+$ mildoc-lint lint demo/sample_draft_opord.md --profile mildoc
+
+mildoc-lint: scanned 1 document(s), findings=8 blocker=0 error=6 warn=0 info=2
+
+[ERROR] cui.invalid_banner @ demo/sample_draft_opord.md:1:1
+  Invalid or legacy CUI banner form detected.
+  snippet: CUI//SP-CTI
+  fix: Use standalone "CUI" for the banner/footer. Put categories and dissemination controls in the designation indicator block.
+  source: DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf
+
+[ERROR] cui.missing_designation_indicator @ demo/sample_draft_opord.md:1:1
+  Missing CUI designation indicator block.
+  fix: Add a DI block with Controlled by, CUI Category, LDC or Distribution Statement, and POC.
+  source: DoD CUI Designation Indicator Block marking tip - https://www.dodcui.mil/Home/Marking-Tips-for-CUI-Documents/CUI-Designation-Indicator-Block/
+
+[ERROR] cui.missing_top_banner @ demo/sample_draft_opord.md:1:1
+  Missing standalone "CUI" top banner on logical page 1.
+  snippet: CUI//SP-CTI
+  fix: Place standalone "CUI" at the top of each page/logical page containing CUI.
+  source: DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf
+
+[ERROR] osmeac.missing_command_signal @ demo/sample_draft_opord.md:1
+  Missing O-SMEAC/SMEAC section: Command and Signal.
+  fix: Use the five-paragraph order structure: Situation, Mission, Execution, Administration and Logistics, Command and Signal.
+  source: USMC FGHT 1004 Introduction to the Operations Order - https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf
+
+[ERROR] pii.ssn @ demo/sample_draft_opord.md:18:38
+  Possible SSN detected.
+  snippet: Point of contact: SSgt Notional, SSN ***-**-****.
+  fix: Remove, redact, or confirm proper authorization, marking, and handling before distribution.
+  source: NIST SP 800-171 Rev. 3 - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf
+
+[ERROR] cui.missing_bottom_banner @ demo/sample_draft_opord.md:19:1
+  Missing standalone "CUI" bottom/footer banner on logical page 1.
+  snippet: Distribution: synthetic training audience only. End of synthetic order.
+  fix: Place standalone "CUI" at the bottom/footer of each page/logical page containing CUI.
+  source: DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf
+
+[INFO] cui.portion_marking_recommended @ demo/sample_draft_opord.md:1
+  No portion markings detected. They are optional for unclassified DoD CUI documents but recommended by DoD training guidance.
+  fix: For higher-assurance drafts, portion mark titles, subjects, paragraphs, bullets, figures, charts, and tables consistently.
+  source: DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf
+
+[INFO] osmeac.orientation_absent @ demo/sample_draft_opord.md:1
+  No Orientation brief detected. O-SMEAC includes Orientation before SMEAC when required.
+  fix: For terrain-dependent or training orders, add a concise orientation before Situation.
+  source: USMC FGHT 1004 Introduction to the Operations Order - https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf
+
+(exit code: 1 -- non-zero is fail-closed: ERROR findings present)
+----------------------------------------------------------------------
+Cited authority per finding (parsed from --format json):
+
+  cui.invalid_banner                 ERROR    DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf
+  cui.missing_designation_indicator  ERROR    DoD CUI Designation Indicator Block marking tip - https://www.dodcui.mil/Home/Marking-Tips-for-CUI-Documents/CUI-Designation-Indicator-Block/
+  cui.missing_top_banner             ERROR    DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf
+  osmeac.missing_command_signal      ERROR    USMC FGHT 1004 Introduction to the Operations Order - https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf
+  pii.ssn                            ERROR    NIST SP 800-171 Rev. 3 - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf
+  cui.missing_bottom_banner          ERROR    DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf
+  cui.portion_marking_recommended    INFO     DoD CUI Markings Training Aid, 2024 - https://www.dodcui.mil/Portals/109/Documents/Desktop%20Aid%20Docs/Cleared%20CUI%20Training%20Aid%20-%20%20Markings%202024.pdf
+  osmeac.orientation_absent          INFO     USMC FGHT 1004 Introduction to the Operations Order - https://www.trngcmd.marines.mil/Portals/207/FGHT%201004%20Introduction%20to%20the%20Operations%20Order%20SO%20Excerpt.pdf
+----------------------------------------------------------------------
+$ mildoc-lint archivist gate demo/sample_draft_opord.md --require-no-pii
+
+archivist: gate decision=BLOCKED findings=8
+
+(exit code: 1 -- non-zero is the refusal)
+----------------------------------------------------------------------
+Self-check (the demo verifies its own output):
+  PASS  lint exits non-zero on ERROR findings (fail-closed)
+  PASS  flags invalid CUI banner (cui.invalid_banner)
+  PASS  flags missing O-SMEAC Command and Signal
+  PASS  flags exposed SSN (pii.ssn)
+  PASS  CUI finding cites DoD CUI Markings Training Aid, 2024
+  PASS  Command-and-Signal finding cites USMC FGHT 1004
+  PASS  SSN finding cites NIST SP 800-171 Rev. 3
+  PASS  SSN is REDACTED in output (***-**-****)
+  PASS  raw SSN never appears in output (zero PII leak)
+  PASS  archivist gate refuses (BLOCKED, non-zero) on PII
+----------------------------------------------------------------------
+DEMO PASS -- three cited findings present, SSN redacted, fail-closed exit verified.
+
+-----------------------------------------------------------------------------
+demo/run_demo.sh self-check exit code: 0   (0 = all checks passed)
