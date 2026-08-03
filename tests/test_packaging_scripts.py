@@ -105,6 +105,10 @@ def test_build_binary_replaces_artifact_without_leaving_backup(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    # The fake below only covers PyInstaller.__main__; build() still imports
+    # the real parent package, so a checkout without the build extra must
+    # skip here instead of failing.
+    pytest.importorskip("PyInstaller", reason="build extra not installed")
     raw_dist = tmp_path / "build" / "pyinstaller" / "dist" / "mildoc-lint"
     (tmp_path / "LICENSE").write_text("license\n", encoding="utf-8")
     artifact_dir = tmp_path / "dist" / "mildoc-lint-linux-x64"
