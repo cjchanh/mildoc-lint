@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 from uuid import uuid4
 
 from .._version import __version__
@@ -51,7 +51,7 @@ def ingest_document(
     *,
     profile: str = "mildoc",
     case: str = "default",
-    db_path: Optional[Path] = None,
+    db_path: Path | None = None,
 ) -> dict[str, Any]:
     p = Path(path).resolve()
     doc = load_document(p)
@@ -89,7 +89,7 @@ def lint_with_receipt(
     require_pass: bool = False,
     require_sources: bool = False,
     require_no_pii: bool = False,
-    db_path: Optional[Path] = None,
+    db_path: Path | None = None,
 ) -> dict[str, Any]:
     p = Path(path).resolve()
     doc = load_document(p)
@@ -211,7 +211,7 @@ def lint_with_receipt(
     }
 
 
-def status_for(path: str | Path, *, db_path: Optional[Path] = None) -> dict[str, Any]:
+def status_for(path: str | Path, *, db_path: Path | None = None) -> dict[str, Any]:
     p = Path(path).resolve()
     doc = load_document(p)
     doc_sha = document_hash(doc.text, str(p))
@@ -228,7 +228,7 @@ def diff_documents(
     old_path: str | Path,
     new_path: str | Path,
     *,
-    db_path: Optional[Path] = None,
+    db_path: Path | None = None,
 ) -> dict[str, Any]:
     old = status_for(old_path, db_path=db_path)
     new = status_for(new_path, db_path=db_path)

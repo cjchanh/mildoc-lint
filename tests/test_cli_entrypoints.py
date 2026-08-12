@@ -22,9 +22,8 @@ def test_parser_prog_name_is_mildoc_lint() -> None:
 def test_version_string_reports_mildoc_lint() -> None:
     parser = build_parser()
     buf = io.StringIO()
-    with pytest.raises(SystemExit) as excinfo:
-        with redirect_stdout(buf), redirect_stderr(buf):
-            parser.parse_args(["--version"])
+    with pytest.raises(SystemExit) as excinfo, redirect_stdout(buf), redirect_stderr(buf):
+        parser.parse_args(["--version"])
     assert excinfo.value.code == 0
     assert f"mildoc-lint {__version__}" in buf.getvalue()
 

@@ -159,7 +159,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "archivist":
             return _archivist_dispatch(args)
 
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 — top-level CLI catch-all for user-facing errors
         print(f"mildoc-lint: {exc}", file=sys.stderr)
         return 2
 

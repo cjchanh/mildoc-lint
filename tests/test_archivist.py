@@ -48,16 +48,16 @@ Synthetic command.
 
 
 def test_receipt_hash_is_deterministic() -> None:
-    base = dict(
-        document_sha256="d" * 64,
-        rule_pack_sha256="r" * 64,
-        source_set_sha256="s" * 64,
-        findings_sha256="f" * 64,
-        decision="PASS",
-        profile="all",
-        tool_version="0.2.0",
-        created_at_utc="2026-05-06T00:00:00Z",
-    )
+    base = {
+        "document_sha256": "d" * 64,
+        "rule_pack_sha256": "r" * 64,
+        "source_set_sha256": "s" * 64,
+        "findings_sha256": "f" * 64,
+        "decision": "PASS",
+        "profile": "all",
+        "tool_version": "0.2.0",
+        "created_at_utc": "2026-05-06T00:00:00Z",
+    }
     r1 = generate_receipt(**base)
     r2 = generate_receipt(**base)
     assert r1["receipt_sha256"] == r2["receipt_sha256"]
@@ -65,15 +65,15 @@ def test_receipt_hash_is_deterministic() -> None:
 
 
 def test_receipt_hash_excludes_runtime_timestamp() -> None:
-    base = dict(
-        document_sha256="d" * 64,
-        rule_pack_sha256="r" * 64,
-        source_set_sha256="s" * 64,
-        findings_sha256="f" * 64,
-        decision="PASS",
-        profile="all",
-        tool_version="0.2.0",
-    )
+    base = {
+        "document_sha256": "d" * 64,
+        "rule_pack_sha256": "r" * 64,
+        "source_set_sha256": "s" * 64,
+        "findings_sha256": "f" * 64,
+        "decision": "PASS",
+        "profile": "all",
+        "tool_version": "0.2.0",
+    }
     r1 = generate_receipt(**base, created_at_utc="2026-05-06T00:00:00Z")
     r2 = generate_receipt(**base, created_at_utc="2026-05-06T00:00:01Z")
     assert r1["created_at_utc"] != r2["created_at_utc"]
@@ -191,7 +191,7 @@ def test_archivist_lint_is_deterministic(tmp_path: Path) -> None:
     db = tmp_path / "ledger.sqlite3"
     doc_path = tmp_path / "opord.md"
     doc_path.write_text(_opord_text(), encoding="utf-8")
-    fixed_kwargs = dict(profile="osmeac", write=False, db_path=db)
+    fixed_kwargs = {"profile": "osmeac", "write": False, "db_path": db}
     r1 = lint_with_receipt(doc_path, **fixed_kwargs)
     r2 = lint_with_receipt(doc_path, **fixed_kwargs)
     assert r1["receipt"]["document_sha256"] == r2["receipt"]["document_sha256"]

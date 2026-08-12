@@ -124,7 +124,6 @@ def test_build_binary_replaces_artifact_without_leaving_backup(
         def run(_args: list[str]) -> None:
             raw_dist.mkdir(parents=True)
             (raw_dist / "mildoc-lint").write_text("new\n", encoding="utf-8")
-            return None
 
     monkeypatch.setitem(__import__("sys").modules, "PyInstaller.__main__", FakePyInstaller)
 

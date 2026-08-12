@@ -14,10 +14,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "eval"))
 
-from score import evaluate  # noqa: E402
-from generate import generate  # noqa: E402
+from generate import generate
+from score import evaluate
 
-from cds_mildoc.engine import lint_path  # noqa: E402
+from cds_mildoc.engine import lint_path
 
 
 def test_corpus_precision_and_recall_floor() -> None:

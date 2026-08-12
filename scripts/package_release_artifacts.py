@@ -7,7 +7,6 @@ import re
 import shutil
 from pathlib import Path
 
-
 _ARTIFACT_NAME_RE = re.compile(
     r"^mildoc-lint-(?P<platform>linux|macos|windows)-(?P<arch>x64|arm64)$"
 )
@@ -51,7 +50,7 @@ def package_release_artifact(
         raise ValueError(f"expected one artifact folder, found {folders}")
 
     platform_tag = _platform_tag_from_artifact_name(folders[0].name)
-    archive_format, archive_suffix = _archive_settings(platform_tag)
+    archive_format, _archive_suffix = _archive_settings(platform_tag)
     return Path(
         shutil.make_archive(
             str(release_dir / folders[0].name),

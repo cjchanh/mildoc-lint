@@ -6,9 +6,13 @@ import pytest
 
 from cds_mildoc.engine import lint_document
 from cds_mildoc.models import Document, Severity
-from cds_mildoc.packs import BUILTIN_PACK_FILES, RulePackError, load_builtin_rule_packs, load_rule_packs
+from cds_mildoc.packs import (
+    BUILTIN_PACK_FILES,
+    RulePackError,
+    load_builtin_rule_packs,
+    load_rule_packs,
+)
 from cds_mildoc.rules import namp, osmeac
-
 
 EXPECTED_RULE_IDS = {
     "cui.di_missing_category",
