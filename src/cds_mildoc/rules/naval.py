@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from itertools import pairwise
 
 from cds_mildoc.models import Document, Finding, Severity
 from cds_mildoc.references import source
@@ -61,7 +62,7 @@ def _check_order(labels: dict[str, int]) -> list[Finding]:
     findings: list[Finding] = []
     sequence = ["from", "to", "via", "subj", "ref", "encl"]
     present = [(label, labels[label]) for label in sequence if label in labels]
-    for (left_label, left_line), (right_label, right_line) in zip(present, present[1:]):
+    for (left_label, left_line), (right_label, right_line) in pairwise(present):
         if left_line > right_line:
             findings.append(
                 Finding(

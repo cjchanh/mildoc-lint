@@ -34,8 +34,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from cds_mildoc.engine import lint_document  # noqa: E402
-from cds_mildoc.models import Document  # noqa: E402
+from cds_mildoc.engine import lint_document
+from cds_mildoc.models import Document
 
 CORPUS = ROOT / "eval" / "corpus"
 SCORED = {"error", "warn", "blocker"}

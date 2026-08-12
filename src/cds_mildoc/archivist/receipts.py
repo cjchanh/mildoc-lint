@@ -7,9 +7,10 @@ from the run's findings under fail-closed gate conditions.
 from __future__ import annotations
 
 import json
+from collections.abc import Iterable
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable, Optional
+from typing import Any
 
 from .db import default_db_path, get_db, init_db
 from .hashing import receipt_hash
@@ -38,8 +39,8 @@ def generate_receipt(
     decision: str,
     profile: str,
     tool_version: str,
-    parent_receipt_sha256: Optional[str] = None,
-    created_at_utc: Optional[str] = None,
+    parent_receipt_sha256: str | None = None,
+    created_at_utc: str | None = None,
 ) -> dict[str, Any]:
     if decision not in {"PASS", "WARN", "FAIL", "BLOCKED"}:
         raise ValueError(f"invalid decision: {decision}")
@@ -64,9 +65,9 @@ def write_receipt(
     receipt: dict[str, Any],
     activity_id: str,
     *,
-    db_path: Optional[Path] = None,
-    document_id: Optional[str] = None,
-    ndjson_path: Optional[Path] = None,
+    db_path: Path | None = None,
+    document_id: str | None = None,
+    ndjson_path: Path | None = None,
 ) -> None:
     required = {
         "schema",
@@ -120,8 +121,8 @@ def write_receipt(
 def load_last_receipt(
     document_sha256: str,
     *,
-    db_path: Optional[Path] = None,
-) -> Optional[dict[str, Any]]:
+    db_path: Path | None = None,
+) -> dict[str, Any] | None:
     resolved_db = db_path if db_path is not None else default_db_path()
     if not resolved_db.exists():
         return None

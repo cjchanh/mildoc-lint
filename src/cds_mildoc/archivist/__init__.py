@@ -33,10 +33,10 @@ from .runner import (
 )
 
 __all__ = [
-    "default_db_path",
     "claim_hash",
     "compute_decision",
     "content_hash",
+    "default_db_path",
     "diff_documents",
     "document_hash",
     "finding_hash",

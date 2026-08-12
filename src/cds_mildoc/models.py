@@ -13,7 +13,7 @@ class Severity(IntEnum):
     BLOCKER = 40
 
     @classmethod
-    def parse(cls, value: str) -> "Severity":
+    def parse(cls, value: str) -> Severity:
         normalized = value.strip().upper()
         aliases = {"WARNING": "WARN", "ERR": "ERROR", "FAIL": "ERROR", "FATAL": "BLOCKER"}
         normalized = aliases.get(normalized, normalized)
@@ -99,7 +99,7 @@ class LintResult:
     documents_scanned: int = 1
     parser_warnings: list[str] = field(default_factory=list)
 
-    def extend(self, other: "LintResult") -> None:
+    def extend(self, other: LintResult) -> None:
         self.findings.extend(other.findings)
         self.documents_scanned += other.documents_scanned
         self.parser_warnings.extend(other.parser_warnings)
